@@ -9,6 +9,7 @@ alias anew='(acd && m add && asu)' # Add new alias
 alias apath='pkgmgr path alias'
 alias arca='arc -qx -- .'
 alias arename='f(){ a rename old="$1" new="$2" && asort }; f'
+alias arefactor='a refactor' # Refactors aliases
 alias asearch='f(){ a search q="$1"; }; f'
 alias asort="(a sort)"
 alias asu='asort && au' # Sort and update aliases
