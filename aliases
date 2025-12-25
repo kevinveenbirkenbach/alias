@@ -47,5 +47,6 @@ alias mte='m test-e2e' # Execute integration tests
 alias mti='m test-integration' # Execute integration test
 alias mtu='m test-unit' # make test-unit
 alias pc='pkgmgr code' # Opens pkgmgr code
+alias p='pkgmgr' # Executes pkgmgr
 alias tidac='e "Cleanup:" && dclean; e "Deploy:" && infinitotestdeploy' # Clean Infinito.Nexus testdeploy to Arch with act
 alias xclipc='xclip -selection clipboard'
