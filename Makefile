@@ -6,7 +6,7 @@ TARGET_ALIAS_FILE := $(SHELL_CONFIG_DIR)/aliases
 BASHRC := $(PREFIX)/.bashrc
 ZSHRC  := $(PREFIX)/.zshrc
 
-.PHONY: install refresh update sort list search
+.PHONY: install refresh update sort list search add
 
 install:
 	@echo ">>> Installing aliases"
@@ -51,3 +51,5 @@ search:
 	}
 	@$(SCRIPTS_DIR)/search.sh "$(q)" $(ALIAS_FILE)
 
+add:
+	@$(SCRIPTS_DIR)/add.sh $(ALIAS_FILE)
