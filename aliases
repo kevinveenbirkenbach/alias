@@ -18,6 +18,7 @@ alias dc='d compose'
 alias dcdown='dc down'
 alias dcdownv='dcdown -v'
 alias d='docker'
+alias dpurge='dstopa && drmall && drmvolall && dsystemprune' # Deletes everything docker related
 alias drmall='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
 alias drmvolall='d volume rm $(docker volume ls -q) 2>/dev/null' # Removes all docker volumes
 alias dstopa='d stop $(docker ps -aq) 2>/dev/null' # Stopps all docker containers
