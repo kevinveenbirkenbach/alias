@@ -1,14 +1,14 @@
-alias a='ad && m' # Call alias 'make'
-alias adc='(ad && m add && asu)' # Add new alias
-alias ad='cd $(ap)' # Change to alias repo directory
-alias ae='nano "$(af)"' # Edit aliases file
-alias arename='f(){ a rename old="$1" new="$2"; }; f'
-alias aeu='ae && asort && au'
-alias af='echo "$(ap)/aliases"'
-alias alist="(a list)"
-alias ap='pkgmgr path alias'
-alias arca='arc -qx -- .'
+alias a='acd && m' # Call alias 'make'
+alias acd='cd $(apath)' # Change to alias repo directory
+alias aeditu='aedit && asort && au'
+alias aedit='nano "$(afile)"' # Edit aliases file
 alias aexport='f(){ a export a="$1"; }; f'
+alias afile='echo "$(apath)/aliases"'
+alias alist="(a list)"
+alias anew='(acd && m add && asu)' # Add new alias
+alias apath='pkgmgr path alias'
+alias arca='arc -qx -- .'
+alias arename='f(){ a rename old="$1" new="$2" && asort }; f'
 alias asearch='f(){ a search q="$1"; }; f'
 alias asort="(a sort)"
 alias asu='asort && au' # Sort and update aliases
