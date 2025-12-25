@@ -6,7 +6,7 @@ TARGET_ALIAS_FILE := $(SHELL_CONFIG_DIR)/aliases
 BASHRC := $(PREFIX)/.bashrc
 ZSHRC  := $(PREFIX)/.zshrc
 
-.PHONY: install refresh update
+.PHONY: install refresh update sort
 
 install:
 	@echo ">>> Installing aliases"
@@ -30,3 +30,7 @@ refresh:
 	@echo "    exec $$SHELL"
 
 update: install refresh
+
+sort:
+	@echo ">>> Sorting aliases alphabetically"
+	@sort $(ALIAS_FILE) -o $(ALIAS_FILE)
