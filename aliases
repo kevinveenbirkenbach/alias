@@ -1,21 +1,22 @@
 alias a='acd && m' # Call alias 'make'
 alias acd='cd $(apath)' # Change to alias repo directory
-alias aeditu='aedit && asu'
 alias aedit='nano "$(afile)"' # Edit aliases file
+alias aeditu='aedit && asupdate'
 alias aexport='f(){ a export a="$1"; }; f'
 alias afile='echo "$(apath)/aliases"'
 alias alist="(a list)"
-alias anew='(acd && m add && asu)' # Add new alias
+alias anew='(acd && m add && asupdate)' # Add new alias
 alias apath='pkgmgr path alias'
 alias arca='arc -qx -- .'
-alias arename='f(){ a rename old="$1" new="$2" && asort }; f'
 alias arefactor='acd && m refactor' # Refactors aliases
+alias arename='f(){ a rename old="$1" new="$2" && asort }; f'
 alias asearch='f(){ a search q="$1"; }; f'
 alias asort="(a sort)"
-alias asu='asort && au' # Sort and update aliases
-alias au='(a update) && source ~/.config/shell/aliases'
-alias dcd='dc down'
+alias asupdate='asort && aupdate' # Sort and update aliases
+alias aupdate='(a update) && source ~/.config/shell/aliases'
 alias dc='d compose'
+alias dcdown='dc down'
+alias dcdownv='dcdown -v'
 alias d='docker'
 alias gaa='ga --all'
 alias ga="g add"
