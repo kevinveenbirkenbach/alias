@@ -6,7 +6,18 @@ TARGET_ALIAS_FILE := $(SHELL_CONFIG_DIR)/aliases
 BASHRC := $(PREFIX)/.bashrc
 ZSHRC  := $(PREFIX)/.zshrc
 
-.PHONY: install refresh update sort list search add
+.PHONY: install refresh update sort list search add rename
+
+# Usage:
+#   make rename old=dc new=compose
+rename:
+	@{ \
+		if [ -z "$(old)" ] || [ -z "$(new)" ]; then \
+			echo "ERROR: missing args. Usage: make rename old=<old> new=<new>"; \
+			exit 2; \
+		fi; \
+	}
+	@$(SCRIPTS_DIR)/rename.sh "$(ALIAS_FILE)" "$(old)" "$(new)"
 
 install:
 	@echo ">>> Installing aliases"
