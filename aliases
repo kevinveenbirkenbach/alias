@@ -5,6 +5,7 @@ alias aeditu='aedit && asupdate'
 alias aexport='f(){ a export a="$1"; }; f'
 alias afile='e "$(apath)/aliases"'
 alias alist="(a list)"
+alias anewa='( acd && anew && gaa && gc -m "Added new command (autocommit)" && gpush )' # Autopublishing of command
 alias anew='(acd && m add && asupdate)' # Add new alias
 alias apath='pkgmgr path alias'
 alias arca='arcqx .'
@@ -15,6 +16,8 @@ alias asearch='f(){ a search q="$1"; }; f'
 alias asort="(a sort)"
 alias asupdate='asort && au' # Sort and update aliases
 alias au='(a update) && source ~/.config/shell/aliases'
+alias c='code' # Execute code
+alias cdp='f(){ cd "$(pkgmgr path "$1")"; }; f' # Change directory to packagemanager package
 alias dc='d compose'
 alias dcdown='dc down'
 alias dcdownv='dcdown -v'
@@ -40,5 +43,9 @@ alias gxds='g diff --staged'
 alias infinitotestdeploy="act -j test-deploy-server --matrix distro:arch --privileged --network host --concurrent-jobs 1"
 alias mi='m install'
 alias m='make'
+alias mte='m test-e2e' # Execute integration tests
+alias mti='m test-integration' # Execute integration test
+alias mtu='m test-unit' # make test-unit
+alias pc='pkgmgr code' # Opens pkgmgr code
 alias tidac='e "Cleanup:" && dclean; e "Deploy:" && infinitotestdeploy' # Clean Infinito.Nexus testdeploy to Arch with act
 alias xclipc='xclip -selection clipboard'
