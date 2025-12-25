@@ -1,17 +1,24 @@
 #!/usr/bin/env python3
 """
-refactor.py
+refactor.py (Option B++)
 
-Refactors shell aliases by:
-1) Detecting duplicate commands (same expanded "full command") and replacing usages
-   with a canonical alias (shortest name, then lexicographic).
-2) Auto-generating aliases for repeated plain command segments that currently have
-   no alias representation, replacing those segments with `auto_<sanitized>` aliases.
+Controlled 1-hop normalization + safe prefix rewrites.
 
-Important safety rules:
-- Never refactor an alias definition into itself (prevents recursion like: alias ad='ad').
-- Only auto-alias "plain commands" (skip shell function syntax, braces, etc.).
-- Auto-alias only when the segment is not already using an alias (segment == expanded full).
+Goals:
+- Replace repeated command sequences with an existing canonical alias
+  (shortest name, then lexicographic), including sequences spanning operators
+  like &&, ||, |, ;.
+- Additionally, normalize by expanding ONLY the FIRST TOKEN of EACH SEGMENT
+  by ONE alias hop, without recursion and without expanding across operators.
+- IMPORTANT: Also refactor within each segment by replacing the longest
+  alias-body PREFIX. This enables:
+    - "docker compose up" -> "dc up"
+    - "d compose up"      -> "dc up"
+    - "git commit -m x"   -> "gc -m x"
+
+Non-goals:
+- Never inline/expand helper aliases into other alias definitions.
+- Never recursively expand aliases.
 """
 
 from __future__ import annotations
@@ -26,28 +33,22 @@ from typing import Dict, List, Tuple
 NAME_CHARS = r"A-Za-z0-9._-"
 NAME_RE = re.compile(rf"^[{NAME_CHARS}]+$")
 
-# Conservative operator split (keeps operators as tokens)
+# Split operators while keeping them (with surrounding spaces) as tokens.
 OP_SPLIT_RE = re.compile(r"(\s*(?:&&|\|\||\||;)\s*)")
 
-# For sanitizing auto alias names
-AUTO_SAFE_RE = re.compile(r"[^a-z0-9_-]+")
-MULTI_UNDERSCORE_RE = re.compile(r"_+")
-
-# "command-ish" first token (keeps it conservative)
-CMDISH_FIRST_TOKEN_RE = re.compile(r"^[A-Za-z0-9._/-]+$")
-
-# Things we treat as "not a plain command segment"
-SHELL_SYNTAX_CHARS = set("{}()")
+# Normalize operator spacing and whitespace.
+OP_NORM_RE = re.compile(r"\s*(&&|\|\||\||;)\s*")
+WS_RE = re.compile(r"\s+")
 
 
 @dataclass
 class AliasLine:
     original: str
-    prefix: str          # includes indentation + "alias "
+    prefix: str
     name: str
-    cmd_raw: str         # text after '=' (as-is, without comment)
-    ws_before_hash: str  # exact whitespace before '#'
-    comment: str         # '# ...' exact, or ''
+    cmd_raw: str
+    ws_before_hash: str
+    comment: str
 
 
 def split_comment_unquoted(line: str) -> Tuple[str, str, str]:
@@ -94,7 +95,7 @@ def parse_alias_line(line: str) -> AliasLine | None:
 
 
 def unwrap_cmd(cmd_raw: str) -> Tuple[str, str, str, str]:
-    """Return (leading_ws, quote, inner, trailing_ws). Unwrap full-string quotes if present."""
+    """Return (leading_ws, quote, inner, trailing_ws)."""
     m = re.match(r"^(\s*)(.*?)(\s*)$", cmd_raw, flags=re.DOTALL)
     leading_ws, body, trailing_ws = m.group(1), m.group(2), m.group(3)
 
@@ -112,140 +113,222 @@ def rewrap_cmd(leading_ws: str, quote: str, inner: str, trailing_ws: str) -> str
     return f"{leading_ws}{inner}{trailing_ws}"
 
 
-def first_token(s: str) -> str:
-    s = s.lstrip()
-    if not s:
-        return ""
-    return re.split(r"\s+", s, maxsplit=1)[0]
-
-
-def strip_first_token(s: str) -> str:
-    s2 = s.lstrip()
-    if not s2:
-        return ""
-    parts = re.split(r"\s+", s2, maxsplit=1)
-    if len(parts) == 1:
-        return ""
-    return parts[1]
-
-
-def expand_prefix_aliases(cmd: str, alias_to_cmd: Dict[str, str], depth: int = 10) -> str:
-    """Expand only the leading token via alias map, repeated for chaining."""
-    cur = cmd
-    for _ in range(depth):
-        tok = first_token(cur)
-        if tok and tok in alias_to_cmd:
-            rest = strip_first_token(cur)
-            repl = alias_to_cmd[tok]
-            cur = f"{repl} {rest}".rstrip() if rest else repl
-        else:
-            break
-    return cur
-
-
-def choose_canonical(aliases: List[str]) -> str:
-    return sorted(aliases, key=lambda a: (len(a), a))[0]
-
-
-def sanitize_auto_name(command_segment: str, max_len: int = 48) -> str:
-    s = command_segment.strip().lower()
-    s = AUTO_SAFE_RE.sub("_", s)
-    s = MULTI_UNDERSCORE_RE.sub("_", s).strip("_")
-    if not s:
-        s = "cmd"
-    if len(s) > max_len:
-        s = s[:max_len].rstrip("_")
-    return f"auto_{s}"
+def choose_canonical(names: List[str]) -> str:
+    return sorted(names, key=lambda a: (len(a), a))[0]
 
 
 def split_by_ops(inner: str) -> List[str]:
+    """Split into [segment, op, segment, ...] keeping operator tokens."""
     parts = OP_SPLIT_RE.split(inner)
-    return [p for p in parts if p]
+    return [p for p in parts if p != ""]
 
 
-def is_plain_segment(seg_strip: str) -> bool:
+def first_token(s: str) -> str:
+    s = s.strip()
+    if not s:
+        return ""
+    return s.split()[0]
+
+
+def strip_first_token(s: str) -> str:
+    s = s.strip()
+    if not s:
+        return ""
+    parts = s.split(maxsplit=1)
+    return parts[1] if len(parts) == 2 else ""
+
+
+def normalize_whitespace_ops(s: str) -> str:
+    s = s.strip()
+    if not s:
+        return ""
+    s = OP_NORM_RE.sub(r" \1 ", s)
+    s = WS_RE.sub(" ", s)
+    return s.strip()
+
+
+def build_alias_body_1hop(raw_inner_for_alias: Dict[str, str]) -> Dict[str, str]:
     """
-    We only consider 'plain command segments' for auto-aliasing.
-    Skip function bodies, braces, and other shell-ish syntax.
+    alias -> body where body's FIRST TOKEN is expanded by one hop if it's an alias.
+    No recursion.
     """
-    if not seg_strip:
-        return False
+    out: Dict[str, str] = {}
+    for name, raw in raw_inner_for_alias.items():
+        raw = raw.strip()
+        if not raw:
+            out[name] = ""
+            continue
 
-    # avoid tiny garbage like "}" or "f"
-    if len(seg_strip) < 2:
-        return False
+        head = first_token(raw)
+        rest = strip_first_token(raw)
 
-    # braces/parentheses often indicate shell syntax/functions/subshell
-    if any(ch in SHELL_SYNTAX_CHARS for ch in seg_strip):
-        return False
-
-    tok = first_token(seg_strip)
-    if not tok:
-        return False
-
-    # reject obvious shell keywords/prefixes
-    if tok in {"if", "then", "fi", "for", "do", "done", "while", "case", "esac", "function"}:
-        return False
-
-    # token should look like a command name/path
-    if not CMDISH_FIRST_TOKEN_RE.match(tok):
-        return False
-
-    return True
-
-
-def refactor_segment(
-    seg: str,
-    alias_to_cmd: Dict[str, str],
-    canonical_for_full: Dict[str, str],
-    current_alias_name: str,
-    full_for_alias: Dict[str, str],
-) -> str:
-    """
-    Replace the longest full-command prefix with canonical alias,
-    but NEVER rewrite the defining alias into itself (prevents recursion).
-    """
-    original = seg
-    seg_strip = seg.lstrip()
-    if not seg_strip:
-        return original
-
-    full = expand_prefix_aliases(seg_strip, alias_to_cmd)
-
-    for full_prefix in sorted(canonical_for_full.keys(), key=len, reverse=True):
-        if full == full_prefix or full.startswith(full_prefix + " "):
-            alias = canonical_for_full[full_prefix]
-            # prevent: alias X='<full_of_X>' -> alias X='X'
-            if (
-                alias == current_alias_name
-                and current_alias_name in full_for_alias
-                and full_prefix == full_for_alias[current_alias_name]
-            ):
-                return original
-
-            rest = full[len(full_prefix):].lstrip()
-            new_seg = f"{alias} {rest}".rstrip() if rest else alias
-            replaced = seg[: len(seg) - len(seg.lstrip())] + new_seg
-            return replaced if replaced != original else original
-
-    return original
-
-
-def refactor_command(
-    inner: str,
-    alias_to_cmd: Dict[str, str],
-    canonical_for_full: Dict[str, str],
-    current_alias_name: str,
-    full_for_alias: Dict[str, str],
-) -> str:
-    parts = split_by_ops(inner)
-    out: List[str] = []
-    for p in parts:
-        if OP_SPLIT_RE.fullmatch(p):
-            out.append(p)
+        if head in raw_inner_for_alias:
+            head_repl = raw_inner_for_alias[head].strip()
         else:
-            out.append(refactor_segment(p, alias_to_cmd, canonical_for_full, current_alias_name, full_for_alias))
-    return "".join(out)
+            head_repl = head
+
+        out[name] = (f"{head_repl} {rest}".strip() if rest else head_repl).strip()
+    return out
+
+
+def normalize_for_match(s: str, alias_body_1hop: Dict[str, str]) -> str:
+    """
+    Normalize string for matching:
+    - For each operator-delimited segment: if first token is an alias,
+      replace that token with alias_body_1hop[alias] (one hop only).
+    - Then normalize operator spacing and collapse whitespace.
+    """
+    s = s.strip()
+    if not s:
+        return ""
+
+    tokens = split_by_ops(s)
+    out: List[str] = []
+    for t in tokens:
+        if OP_SPLIT_RE.fullmatch(t):
+            out.append(t)
+            continue
+
+        seg = t.strip()
+        if not seg:
+            out.append(seg)
+            continue
+
+        head = first_token(seg)
+        rest = strip_first_token(seg)
+
+        if head in alias_body_1hop:
+            head_repl = alias_body_1hop[head]
+            seg_norm = (f"{head_repl} {rest}".strip() if rest else head_repl).strip()
+        else:
+            seg_norm = seg
+
+        out.append(seg_norm)
+
+    return normalize_whitespace_ops("".join(out))
+
+
+def build_norm_patterns(
+    raw_inner_for_alias: Dict[str, str],
+    alias_body_1hop: Dict[str, str],
+) -> Tuple[Dict[str, str], List[str]]:
+    """
+    Build:
+      canonical_for_norm: norm_pattern -> canonical_alias
+      norm_patterns_sorted: patterns sorted by length desc
+    """
+    norm_to_aliases: Dict[str, List[str]] = {}
+    for name, raw in raw_inner_for_alias.items():
+        norm = normalize_for_match(raw, alias_body_1hop)
+        if not norm:
+            continue
+        norm_to_aliases.setdefault(norm, []).append(name)
+
+    canonical_for_norm = {norm: choose_canonical(names) for norm, names in norm_to_aliases.items()}
+    norm_patterns_sorted = sorted(canonical_for_norm.keys(), key=lambda n: (-len(n), n))
+    return canonical_for_norm, norm_patterns_sorted
+
+
+def refactor_segment_prefix(
+    seg: str,
+    current_alias_name: str,
+    alias_body_1hop: Dict[str, str],
+    canonical_for_norm: Dict[str, str],
+    norm_patterns_sorted: List[str],
+) -> str:
+    """
+    Within a single operator-delimited segment, replace the longest matching
+    alias-body prefix (under normalized form) with its canonical alias.
+
+    Example:
+      "docker compose up" -> "dc up"
+      "d compose up"      -> "dc up" (d one-hop -> docker)
+      "git commit -m x"   -> "gc -m x"
+    """
+    orig_ws = seg[: len(seg) - len(seg.lstrip())]
+    seg_strip = seg.strip()
+    if not seg_strip:
+        return seg
+
+    seg_norm = normalize_for_match(seg_strip, alias_body_1hop)
+
+    for pat in norm_patterns_sorted:
+        canon = canonical_for_norm[pat]
+
+        # Never inject the current alias into its own body.
+        if canon == current_alias_name:
+            continue
+
+        if seg_norm == pat:
+            return orig_ws + canon
+
+        if seg_norm.startswith(pat + " "):
+            rest_norm = seg_norm[len(pat) :].lstrip()
+            # Keep the rest as normalized; we don't try to preserve original micro-spacing.
+            return orig_ws + (f"{canon} {rest_norm}".strip())
+
+    return seg
+
+
+def refactor_inner(
+    inner: str,
+    current_alias_name: str,
+    alias_body_1hop: Dict[str, str],
+    canonical_for_norm: Dict[str, str],
+    norm_patterns_sorted: List[str],
+) -> str:
+    """
+    1) Prefix rewrite per segment (handles docker compose up -> dc up, git commit -m -> gc -m)
+    2) Then window rewrite across operator tokens (handles asort && au -> asu, etc.)
+       with the IMPORTANT rule: if a window maps to the current alias, skip it and keep searching.
+    """
+    tokens = split_by_ops(inner)
+    if not tokens:
+        return inner
+
+    # Step 1: prefix rewrite inside each segment
+    for idx, t in enumerate(tokens):
+        if OP_SPLIT_RE.fullmatch(t):
+            continue
+        tokens[idx] = refactor_segment_prefix(
+            seg=t,
+            current_alias_name=current_alias_name,
+            alias_body_1hop=alias_body_1hop,
+            canonical_for_norm=canonical_for_norm,
+            norm_patterns_sorted=norm_patterns_sorted,
+        )
+
+    changed = False
+    i = 0
+    while i < len(tokens):
+        did_replace = False
+
+        for pat in norm_patterns_sorted:
+            canon = canonical_for_norm[pat]
+
+            for j in range(i + 1, len(tokens) + 1):
+                window = "".join(tokens[i:j])
+                win_norm = normalize_for_match(window, alias_body_1hop)
+
+                if win_norm != pat:
+                    continue
+
+                # CRITICAL: do NOT "consume" self-matches; keep searching smaller matches.
+                if canon == current_alias_name:
+                    continue
+
+                tokens = tokens[:i] + [canon] + tokens[j:]
+                changed = True
+                did_replace = True
+                break
+
+            if did_replace:
+                break
+
+        i += 1
+
+    out = "".join(tokens)
+    return out if changed else out  # keep prefix-rewrite changes regardless
 
 
 def main() -> int:
@@ -266,190 +349,45 @@ def main() -> int:
         if al:
             parsed.append(al)
 
-    # alias -> inner command (unwrapped)
-    alias_to_cmd_inner: Dict[str, str] = {}
+    raw_inner_for_alias: Dict[str, str] = {}
     for al in parsed:
         _, _, inner, _ = unwrap_cmd(al.cmd_raw)
-        alias_to_cmd_inner[al.name] = inner
+        raw_inner_for_alias[al.name] = inner.strip()
 
-    # full command for each alias (used for recursion prevention)
-    full_for_alias: Dict[str, str] = {
-        name: expand_prefix_aliases(inner, alias_to_cmd_inner)
-        for name, inner in alias_to_cmd_inner.items()
-    }
+    alias_body_1hop = build_alias_body_1hop(raw_inner_for_alias)
+    canonical_for_norm, norm_patterns_sorted = build_norm_patterns(raw_inner_for_alias, alias_body_1hop)
 
-    # duplicates: full -> [aliases]
-    dupes: Dict[str, List[str]] = {}
-    for a, full in full_for_alias.items():
-        dupes.setdefault(full, []).append(a)
-
-    canonical_for_full: Dict[str, str] = {full: choose_canonical(names) for full, names in dupes.items()}
-
-    # ---------- Phase 1: refactor existing usages to canonical aliases ----------
-    phase1_changed = False
-    phase1_lines: List[str] = []
+    changed_any = False
+    out_lines: List[str] = []
 
     for line in lines:
         al = parse_alias_line(line)
         if not al:
-            phase1_lines.append(line)
+            out_lines.append(line)
             continue
 
         leading_ws, quote, inner, trailing_ws = unwrap_cmd(al.cmd_raw)
-        new_inner = refactor_command(
-            inner,
-            alias_to_cmd_inner,
-            canonical_for_full,
+
+        new_inner = refactor_inner(
+            inner=inner,
             current_alias_name=al.name,
-            full_for_alias=full_for_alias,
+            alias_body_1hop=alias_body_1hop,
+            canonical_for_norm=canonical_for_norm,
+            norm_patterns_sorted=norm_patterns_sorted,
         )
+
         if new_inner != inner:
-            phase1_changed = True
+            changed_any = True
 
         new_cmd_raw = rewrap_cmd(leading_ws, quote, new_inner, trailing_ws)
         rebuilt = f"{al.prefix}{al.name}={new_cmd_raw}"
         if al.comment:
             rebuilt += al.ws_before_hash + al.comment
-        phase1_lines.append(rebuilt)
+        out_lines.append(rebuilt)
 
-    # Re-parse after phase1 (for auto-alias stage)
-    phase2_parsed: List[AliasLine] = []
-    for line in phase1_lines:
-        al = parse_alias_line(line)
-        if al:
-            phase2_parsed.append(al)
+    aliases_path.write_text("\n".join(out_lines) + "\n", encoding="utf-8")
 
-    phase2_alias_to_inner: Dict[str, str] = {}
-    for al in phase2_parsed:
-        _, _, inner, _ = unwrap_cmd(al.cmd_raw)
-        phase2_alias_to_inner[al.name] = inner
-
-    # Existing alias coverage (full -> canonical existing alias)
-    phase2_full_for_alias: Dict[str, str] = {
-        name: expand_prefix_aliases(inner, phase2_alias_to_inner)
-        for name, inner in phase2_alias_to_inner.items()
-    }
-    full_to_some_alias: Dict[str, List[str]] = {}
-    for name, full in phase2_full_for_alias.items():
-        full_to_some_alias.setdefault(full, []).append(name)
-    full_to_canonical_existing = {full: choose_canonical(names) for full, names in full_to_some_alias.items()}
-
-    # ---------- Phase 2: auto-alias repeated *plain* segments with no alias ----------
-    seg_full_counts: Dict[str, int] = {}
-
-    # Only count segments that are plain AND not already using an alias (segment == expanded full)
-    for al in phase2_parsed:
-        _, _, inner, _ = unwrap_cmd(al.cmd_raw)
-        for part in split_by_ops(inner):
-            if OP_SPLIT_RE.fullmatch(part):
-                continue
-            seg_strip = part.lstrip()
-            if not is_plain_segment(seg_strip):
-                continue
-            seg_full = expand_prefix_aliases(seg_strip, phase2_alias_to_inner)
-            if seg_strip != seg_full:
-                # already using an alias chain -> do not auto-alias
-                continue
-            seg_full_counts[seg_full] = seg_full_counts.get(seg_full, 0) + 1
-
-    auto_targets = sorted(
-        [
-            full
-            for full, cnt in seg_full_counts.items()
-            if cnt >= 2 and full not in full_to_canonical_existing
-        ],
-        key=lambda s: (-seg_full_counts[s], s),
-    )
-
-    existing_names = set(phase2_alias_to_inner.keys())
-    auto_map: Dict[str, str] = {}  # full_command -> auto_alias_name
-
-    for full in auto_targets:
-        base = sanitize_auto_name(full)
-        name = base
-        i = 2
-        while name in existing_names:
-            name = f"{base}_{i}"
-            i += 1
-        existing_names.add(name)
-        auto_map[full] = name
-
-    phase2_changed = False
-    final_lines: List[str] = []
-
-    for line in phase1_lines:
-        al = parse_alias_line(line)
-        if not al:
-            final_lines.append(line)
-            continue
-
-        leading_ws, quote, inner, trailing_ws = unwrap_cmd(al.cmd_raw)
-        parts = split_by_ops(inner)
-        new_parts: List[str] = []
-
-        for p in parts:
-            if OP_SPLIT_RE.fullmatch(p):
-                new_parts.append(p)
-                continue
-
-            seg = p
-            seg_strip = seg.lstrip()
-            if not seg_strip:
-                new_parts.append(seg)
-                continue
-
-            if not is_plain_segment(seg_strip):
-                new_parts.append(seg)
-                continue
-
-            seg_full = expand_prefix_aliases(seg_strip, phase2_alias_to_inner)
-
-            # only replace if it truly has no alias use yet (segment == full)
-            if seg_strip == seg_full and seg_full in auto_map:
-                auto_name = auto_map[seg_full]
-                new_seg = seg[: len(seg) - len(seg.lstrip())] + auto_name
-                if new_seg != seg:
-                    phase2_changed = True
-                new_parts.append(new_seg)
-            else:
-                new_parts.append(seg)
-
-        new_inner = "".join(new_parts)
-        if new_inner != inner:
-            phase2_changed = True
-
-        new_cmd_raw = rewrap_cmd(leading_ws, quote, new_inner, trailing_ws)
-        rebuilt = f"{al.prefix}{al.name}={new_cmd_raw}"
-        if al.comment:
-            rebuilt += al.ws_before_hash + al.comment
-        final_lines.append(rebuilt)
-
-    appended_any = False
-    if auto_map:
-        final_lines.append("")
-        final_lines.append("# --- auto-generated aliases (refactor.py) ---")
-        appended_any = True
-        for full, name in sorted(auto_map.items(), key=lambda kv: kv[1]):
-            escaped = full.replace("'", "'\"'\"'")
-            final_lines.append(f"alias {name}='{escaped}' # auto-generated")
-
-    aliases_path.write_text("\n".join(final_lines) + "\n", encoding="utf-8")
-
-    # Report
-    dupe_groups = [(full, names) for full, names in dupes.items() if len(names) > 1]
-    if dupe_groups:
-        print("Duplicate commands detected:")
-        for full, names in sorted(dupe_groups, key=lambda x: (len(x[1]), x[0]), reverse=True):
-            canon = canonical_for_full[full]
-            others = [n for n in names if n != canon]
-            print(f"  - canonical: {canon} | duplicates: {', '.join(others)} | full: {full}")
-
-    if auto_map:
-        print("Auto-generated aliases:")
-        for full, name in sorted(auto_map.items(), key=lambda kv: kv[1]):
-            print(f"  - {name} = {full} (seen {seg_full_counts[full]}x)")
-
-    if phase1_changed or phase2_changed or appended_any:
+    if changed_any:
         print(f"Refactor completed: updated {aliases_path}")
     else:
         print("No refactor changes were necessary.")
