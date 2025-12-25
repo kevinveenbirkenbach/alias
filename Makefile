@@ -6,7 +6,10 @@ TARGET_ALIAS_FILE := $(SHELL_CONFIG_DIR)/aliases
 BASHRC := $(PREFIX)/.bashrc
 ZSHRC  := $(PREFIX)/.zshrc
 
-.PHONY: install refresh update sort list search add rename
+.PHONY: install refresh update sort list search add rename refactor
+
+refactor:
+	@python3 $(SCRIPTS_DIR)/refactor.py $(ALIAS_FILE)
 
 # Usage:
 #   make rename old=dc new=compose
