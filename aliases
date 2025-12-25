@@ -1,7 +1,7 @@
 
 alias 0='clear' # clear screen
 alias a='acd && m' # Call alias 'make'
-alias aacp='(acd && giaa && gico -m "Autocommit" && gipush)' # add, commit, push and update alias
+alias aacp='(acd && giaa && gico -m "Autocommit" && gipush)' # add, commit, and push alias
 alias acd='cd $(apath)' # Change to alias repo directory
 alias ac='pc alias' # Edit aliases
 alias aedit='nano "$(afile)"' # Edit aliases file
@@ -20,6 +20,7 @@ alias asearch='f(){ a search q="$1"; }; f'
 alias asort="(a sort)"
 alias au='(a update) && source ~/.config/shell/aliases'
 alias aus='asort && au' # Sort and update aliases
+alias auspu='(aus && aacp)' # update, add, commit, and push alias
 alias bsrfc='f(){ command bsr -frcvn "$3" "$1" -- "$2"; }; f' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
 alias dc='d compose'
