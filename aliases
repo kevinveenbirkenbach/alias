@@ -3,7 +3,7 @@ alias 0='clear' # clear screen
 alias a='acd && m' # Call alias 'make'
 alias aacp='(acd && giaa && gico -m "Autocommit" && gipush)' # add, commit, push and update alias
 alias acd='cd $(apath)' # Change to alias repo directory
-alias acupa='pc alias && aus && aacp' # Change to alias repo directory
+alias ac='pc alias' # Edit aliases
 alias aedit='nano "$(afile)"' # Edit aliases file
 alias aeditu='aedit && aus'
 alias aexport='f(){ a export a="$1"; }; f'
