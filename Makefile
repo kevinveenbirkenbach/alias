@@ -35,29 +35,13 @@ sort:
 	@echo ">>> Sorting aliases alphabetically"
 	@sort $(ALIAS_FILE) -o $(ALIAS_FILE)
 
+SCRIPTS_DIR := scripts
+
 list:
-	@echo ">>> Listing aliases from $(ALIAS_FILE)"
-	@printf "%-20s | %-45s | %s\n" "alias" "command" "comment"
-	@printf "%-20s-+-%-45s-+-%s\n" "--------------------" "---------------------------------------------" "------------------------------"
-	@awk '\
-		BEGIN { OFS=" | " } \
-		/^[[:space:]]*alias[[:space:]]+/ { \
-			line=$$0; \
-			comment=""; \
-			if (match(line, /[[:space:]]*#[[:space:]]*(.*)$$/, m)) { comment=m[1]; sub(/[[:space:]]*#[[:space:]]*.*/, "", line); } \
-			sub(/^[[:space:]]*alias[[:space:]]+/, "", line); \
-			name=line; sub(/=.*/, "", name); \
-			cmd=line; sub(/^[^=]*=/, "", cmd); \
-			gsub(/^[[:space:]]+|[[:space:]]+$$/, "", cmd); \
-			gsub(/^'\''|'\''$$/, "", cmd); \
-			gsub(/^"|"$$/, "", cmd); \
-			printf "%-20s | %-45s | %s\n", name, cmd, comment; \
-		} \
-	' $(ALIAS_FILE)
+	@$(SCRIPTS_DIR)/list.sh $(ALIAS_FILE)
 
 # Usage:
 #   make search q=arc
-#   make search q=docker
 search:
 	@{ \
 		if [ -z "$(q)" ]; then \
@@ -65,23 +49,5 @@ search:
 			exit 2; \
 		fi; \
 	}
-	@echo ">>> Searching aliases for: $(q)"
-	@printf "%-20s | %-45s | %s\n" "alias" "command" "comment"
-	@printf "%-20s-+-%-45s-+-%s\n" "--------------------" "---------------------------------------------" "------------------------------"
-	@awk -v q="$(q)" '\
-		BEGIN { OFS=" | "; ql=tolower(q) } \
-		/^[[:space:]]*alias[[:space:]]+/ { \
-			orig=$$0; \
-			if (index(tolower(orig), ql) == 0) next; \
-			line=orig; \
-			comment=""; \
-			if (match(line, /[[:space:]]*#[[:space:]]*(.*)$$/, m)) { comment=m[1]; sub(/[[:space:]]*#[[:space:]]*.*/, "", line); } \
-			sub(/^[[:space:]]*alias[[:space:]]+/, "", line); \
-			name=line; sub(/=.*/, "", name); \
-			cmd=line; sub(/^[^=]*=/, "", cmd); \
-			gsub(/^[[:space:]]+|[[:space:]]+$$/, "", cmd); \
-			gsub(/^'\''|'\''$$/, "", cmd); \
-			gsub(/^"|"$$/, "", cmd); \
-			printf "%-20s | %-45s | %s\n", name, cmd, comment; \
-		} \
-	' $(ALIAS_FILE)
+	@$(SCRIPTS_DIR)/search.sh "$(q)" $(ALIAS_FILE)
+
