@@ -8,6 +8,7 @@ alias af='echo "$(ap)/aliases"'
 alias alist="(a list)"
 alias ap='pkgmgr path alias'
 alias arca='arc -qx -- .'
+alias aexport='f(){ a export a="$1"; }; f'
 alias asearch='f(){ a search q="$1"; }; f'
 alias asort="(a sort)"
 alias asu='asort && au' # Sort and update aliases

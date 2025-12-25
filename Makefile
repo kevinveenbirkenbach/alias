@@ -6,7 +6,19 @@ TARGET_ALIAS_FILE := $(SHELL_CONFIG_DIR)/aliases
 BASHRC := $(PREFIX)/.bashrc
 ZSHRC  := $(PREFIX)/.zshrc
 
-.PHONY: install refresh update sort list search add rename refactor
+.PHONY: install refresh update sort list search add rename refactor export
+
+# Usage:
+#   make export a=gpull
+#   make export a=gxa
+export:
+	@{ \
+		if [ -z "$(a)" ]; then \
+			echo "ERROR: missing alias name. Usage: make export a=<alias>"; \
+			exit 2; \
+		fi; \
+	}
+	@$(SCRIPTS_DIR)/export.sh "$(a)" $(ALIAS_FILE)
 
 refactor:
 	@python3 $(SCRIPTS_DIR)/refactor.py $(ALIAS_FILE)
