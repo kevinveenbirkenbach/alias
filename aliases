@@ -1,7 +1,7 @@
 
 alias 0='clear' # clear screen
 alias a='acd && m' # Call alias 'make'
-alias aacp='(acd && giaa && gico -m "Autocommit" && gipush)' # add, commit, and push alias
+alias ada='(acd && giaa && gico -m "Autocommit" && gipush)' # add, commit, and push alias
 alias acd='cd $(apath)' # Change to alias repo directory
 alias ac='pc alias' # Edit aliases
 alias aedit='nano "$(afile)"' # Edit aliases file
@@ -10,7 +10,7 @@ alias aexport='f(){ (a export a="$1";) }; f'
 alias afact='(acd && m refactor)' # Refactors aliases
 alias afile='e "$(apath)/aliases"'
 alias alist="(a list)"
-alias anewa='anew && aacp' # Autopublishing of command
+alias anewa='anew && ada' # Autopublishing of command
 alias anew='(acd && m add && aus)' # Add new alias
 alias apath='p path alias'
 alias arci='arcix .'
@@ -21,7 +21,7 @@ alias asearch='f(){ (a search q="$1"); }; f'
 alias asort="(a sort)"
 alias au='(a update) && source ~/.config/shell/aliases'
 alias aus='asort && au' # Sort and update aliases
-alias auspu='(aus && aacp)' # update, add, commit, and push alias
+alias auspu='(aus && ada)' # update, add, commit, and push alias
 alias bsra='f(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; f' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
 alias dbuild='f(){ docker build -t "$1" .; }; f' # Build local Dockerfile $1 => image name
@@ -45,7 +45,7 @@ alias giclo='gi clone' # Executes 'git clone'
 alias gico="gi commit"
 alias gicopu="gico && gipush"
 alias gidis='gi diff --staged'
-alias gidisx='gidis | xclipc && gidis'
+alias gidisx='gidis | xc && gidis'
 alias gi="git"
 alias giout='gi checkout' # Executes 'git checkout'
 alias gipull="gi pull"
@@ -69,6 +69,6 @@ alias tind="act -W .github/workflows/test-deploy-server.yml -j test-deploy-serve
 alias tint='m test-integration' # Execute integration test
 alias tlog='f(){ local cmd="${aliases[$1]:-$1}"; eval "$cmd" 2>&1 | tee "${2:-$HOME/log.txt}"; }; f' # Usage: tlog <alias-or-cmd> [logfile]
 alias tunit='m test-unit' # make test-unit
-alias xclipc='xclip -selection clipboard'
+alias xc='xclip -selection clipboard'
 alias zc='zc(){ local z="${1:-/tmp/packed.zip}"; [ -e "$z" ] && { printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$z"; read _; }; rm -f "$z" && zip -vr "$z" *; }; zc' # ZIP current without hidden files
 alias z="zip"
