@@ -1,7 +1,7 @@
 
 alias 0='clear' # clear screen
 alias a='acd && m' # Call alias 'make'
-alias ada='(acd && giaa && gico -m "Autocommit" && gipush)' # add, commit, and push alias
+alias ada='(acd && giaa && gico -m "Autocommit" && gipu)' # add, commit, and push alias
 alias acd='cd $(apath)' # Change to alias repo directory
 alias ac='pc alias' # Edit aliases
 alias aedit='nano "$(afile)"' # Edit aliases file
@@ -43,13 +43,14 @@ alias giaax='giaa && gidisx'
 alias gia="gi add"
 alias giclo='gi clone' # Executes 'git clone'
 alias gico="gi commit"
-alias gicopu="gico && gipush"
+alias giup="gico && gipu"
+alias giupa="giaa && giup" # git add --all, commit and push
 alias gidis='gi diff --staged'
 alias gidisx='gidis | xc && gidis'
 alias gi="git"
 alias giout='gi checkout' # Executes 'git checkout'
-alias gipull="gi pull"
-alias gipush="gi push"
+alias gipd="gi pull"
+alias gipu="gi push"
 alias girh='gi reset HEAD' # Resets git head
 alias gits='gi status' # Git status
 alias mi='m install'
