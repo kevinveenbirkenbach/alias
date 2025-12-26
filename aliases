@@ -13,7 +13,8 @@ alias alist="(a list)"
 alias anewa='anew && aacp' # Autopublishing of command
 alias anew='(acd && m add && aus)' # Add new alias
 alias apath='p path alias'
-alias arca='arcqx .'
+alias arci='arcix .'
+alias arcix='arc -qxI .md LICENSE --' # Copys all files into clippboard except .md
 alias arcqx='arc -qx --'
 alias arename='f(){ (a rename old="$1" new="$2" && asort) }; f'
 alias asearch='f(){ (a search q="$1"); }; f'
@@ -21,7 +22,7 @@ alias asort="(a sort)"
 alias au='(a update) && source ~/.config/shell/aliases'
 alias aus='asort && au' # Sort and update aliases
 alias auspu='(aus && aacp)' # update, add, commit, and push alias
-alias bsrfc='f(){ command bsr -frcvn "$3" "$1" -- "$2"; }; f' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
+alias bsra='f(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; f' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
 alias dbuild='f(){ docker build -t "$1" .; }; f' # Build local Dockerfile $1 => image name
 alias dc='d compose'
@@ -53,10 +54,14 @@ alias girh='gi reset HEAD' # Resets git head
 alias gits='gi status' # Git status
 alias mi='m install'
 alias m='make'
+alias n='nautilus ${1:-}'
 alias pcd='f(){ cd "$(pkgmgr path "$1")"; }; f' # Change directory to packagemanager package
 alias pcoin='p config init' # Executes 'pkgmgr config init'
 alias pc='p code' # Opens pkgmgr code
+alias pe='p explore' # Opens GNOME for pkgmgr package
 alias p='pkgmgr' # Executes pkgmgr
+alias te2e0='0 && te2e'
+alias te2e0l='tlog te2e0'
 alias te2e='m test-e2e' # Execute integration tests
 alias tindac0="0 && tindac" # Tindac with clear screen
 alias tindac='e "Cleanup:" && dclean; e "Deploy:" && tind' # Clean Infinito.Nexus testdeploy to Arch with act
@@ -65,3 +70,5 @@ alias tint='m test-integration' # Execute integration test
 alias tlog='f(){ local cmd="${aliases[$1]:-$1}"; eval "$cmd" 2>&1 | tee "${2:-$HOME/log.txt}"; }; f' # Usage: tlog <alias-or-cmd> [logfile]
 alias tunit='m test-unit' # make test-unit
 alias xclipc='xclip -selection clipboard'
+alias zc='zc(){ local z="${1:-/tmp/packed.zip}"; [ -e "$z" ] && { printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$z"; read _; }; rm -f "$z" && zip -vr "$z" *; }; zc' # ZIP current without hidden files
+alias z="zip"
