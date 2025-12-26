@@ -65,6 +65,7 @@ alias pcoin='p config init' # Executes 'pkgmgr config init'
 alias pc='p code' # Opens pkgmgr code
 alias pe='p explore' # Opens GNOME for pkgmgr package
 alias p='pkgmgr' # Executes pkgmgr
+alias prm='p release major'
 alias te2e0='0 && te2e'
 alias te2e0l='tlog te2e0'
 alias te2e='m test-e2e' # Execute integration tests
