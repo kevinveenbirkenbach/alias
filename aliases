@@ -15,7 +15,7 @@ alias anew='(acd && m add && aus)' # Add new alias
 alias apath='p path alias'
 alias arci='arcix .'
 alias arcix='arc -qxI .md LICENSE --' # Copys all files into clippboard except .md
-alias arcqx='arc -qx --'
+alias arcx='arc -qx --'
 alias arename='f(){ (a rename old="$1" new="$2" && asort) }; f'
 alias asearch='f(){ (a search q="$1"); }; f'
 alias asort="(a sort)"
