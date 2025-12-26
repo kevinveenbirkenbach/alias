@@ -23,6 +23,7 @@ alias aus='asort && au' # Sort and update aliases
 alias auspu='(aus && aacp)' # update, add, commit, and push alias
 alias bsrfc='f(){ command bsr -frcvn "$3" "$1" -- "$2"; }; f' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
+alias dbuild='f(){ docker build -t "$1" .; }; f' # Build local Dockerfile $1 => image name
 alias dc='d compose'
 alias dcdown='dc down'
 alias dcdownv='dcdown -v'
@@ -31,6 +32,7 @@ alias d='docker'
 alias dpurge='dclean && dsystemprune' # Deletes everything docker related
 alias drmall='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
 alias drmvolall='d volume rm $(docker volume ls -q) 2>/dev/null' # Removes all docker volumes
+alias drun='docker run --rm' #Runs image
 alias dstopa='d stop $(docker ps -aq) 2>/dev/null' # Stopps all docker containers
 alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker related on the system
 alias e='echo' # echo
