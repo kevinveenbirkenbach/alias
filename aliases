@@ -23,6 +23,7 @@ alias arename='f(){ (a rename old="$1" new="$2" && asort) }; f'
 alias asearch='f(){ (a search q="$1"); }; f'
 alias asort="(a sort)"
 alias atmp='dp /tmp/alias' # base temp dir
+alias atmpo='n "$(atmp)"'
 alias au='(a update) && source ~/.config/shell/aliases'
 alias aus='asort && au' # Sort and update aliases
 alias azd='dp "$(atmp)/zip"' # zip dir
