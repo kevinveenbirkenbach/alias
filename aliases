@@ -9,9 +9,12 @@ alias aeditu='aedit && aus'
 alias aexport='f(){ (a export a="$1";) }; f'
 alias afact='(acd && m refactor)' # Refactors aliases
 alias afile='e "$(apath)/aliases"'
+alias ald='dp "$(atmp)/log"' # log dir
+alias alf='e "$(ald)/$(zulu).log"' # default log file path
 alias alist="(a list)"
 alias anewa='anew && ada' # Autopublishing of command
 alias anew='(acd && m add && aus)' # Add new alias
+alias ao='(aus && ada)' # update, add, commit, and push alias (Alpha and Omega ;) )
 alias apath='p path alias'
 alias arci='arcix .'
 alias arcix='arc -qxI .md LICENSE --' # Copys all files into clippboard except .md
@@ -19,9 +22,11 @@ alias arcx='arc -qx --'
 alias arename='f(){ (a rename old="$1" new="$2" && asort) }; f'
 alias asearch='f(){ (a search q="$1"); }; f'
 alias asort="(a sort)"
+alias atmp='dp /tmp/alias' # base temp dir
 alias au='(a update) && source ~/.config/shell/aliases'
-alias ausa='(aus && ada)' # update, add, commit, and push alias
 alias aus='asort && au' # Sort and update aliases
+alias azd='dp "$(atmp)/zip"' # zip dir
+alias azf='e "$(azd)/$(zulu).zip"' # default zip file path
 alias bsra='f(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; f' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
 alias dbuild='f(){ docker build -t "$1" .; }; f' # Build local Dockerfile $1 => image name
@@ -30,6 +35,7 @@ alias dcdown='dc down'
 alias dcdownv='dcdown -v'
 alias dclean="dstopa && drmall && drmvolall"
 alias d='docker'
+alias dp='f(){ umask 077; mkdir -p -- "$1"; e "$1"; }; f' # create protected dir (0700), echo path
 alias dpurge='dclean && dsystemprune' # Deletes everything docker related
 alias drmall='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
 alias drmvolall='d volume rm $(docker volume ls -q) 2>/dev/null' # Removes all docker volumes
@@ -37,34 +43,41 @@ alias drun='docker run --rm' #Runs image
 alias dstopa='d stop $(docker ps -aq) 2>/dev/null' # Stopps all docker containers
 alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker related on the system
 alias e='echo' # echo
-alias gi0='gi clean -fdX .' # Executes 'git clean -fdX .' and deletes all untracked files
+alias enter='f(){ printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$1"; read -r _; }; f' # confirm overwrite
 alias giaa='gia --all' # git add --all
-alias giaax='giaa && gidisx'
 alias gia="gi add"
 alias giau="giaa && giup" # git add --all, commit and push
+alias giax='giaa && gidisx'
 alias giclo='gi clone' # Executes 'git clone'
 alias gico="gi commit"
-alias gid="gi diff"
-alias gidic='f(){ gid "$1"..HEAD | tee >(xc >/dev/null) | less; }; f' # All changes accumulated since commit
+alias gidic='f(){ gidi "$1"..HEAD | tee >(xc >/dev/null) | less; }; f' # All changes accumulated since commit
+alias gidi="gi diff"
 alias gidil='gidic $(gilata)' # Changes since last tag
-alias gidis='gid --staged'
+alias gidis='gidi --staged'
 alias gidisx='gidis | xc && gidis'
 alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
-alias gioa="gioc && gioh && gi0 && gire && gis" # Reset head and checkout all
+alias gio0='gi clean -fdX .' # Executes 'git clean -fdX .' and deletes all untracked files
+alias gioa="gioc . && gioh . && gio0 && girec && gis" # Reset head and checkout all
 alias gioc='gi checkout' # Executes 'git checkout'
 alias gioh='gi reset HEAD' # Resets git head
 alias gipd="gi pull"
 alias gipu="gi push"
+alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
 alias gis='gi status' # Git status
+alias gista='gi stash' # Git stash
 alias gist='gist apply' # Git stash apply
-alias gist='gi stash' # Git stash
 alias giup="gico && gipu"
+alias intd0="0 && intdc" # Tindac with clear screen
+alias intd="act -W .github/workflows/test-deploy-server.yml -j test-deploy-server --matrix distro:arch --privileged --network host --concurrent-jobs 1"
+alias intdc='e "Cleanup:" && dclean; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
+alias intdo="tlog intd0" # Test infinito deploy and log (Omega command)
+alias inti='m test-integration' # Execute integration test
 alias mi='m install'
 alias m='make'
-alias n='nautilus ${1:-}'
+alias n='f(){ nohup nautilus "${1:-$PWD}" >/dev/null 2>&1 & disown; }; f' # Executes nautilus to explore the (current) directory
 alias pcd='f(){ cd "$(pkgmgr path "$1")"; }; f' # Change directory to packagemanager package
 alias pcoin='p config init' # Executes 'pkgmgr config init'
 alias pc='p code' # Opens pkgmgr code
@@ -77,12 +90,9 @@ alias pr='p release'
 alias te2e0='0 && te2e'
 alias te2e0l='tlog te2e0'
 alias te2e='m test-e2e' # Execute integration tests
-alias tindac0="0 && tindac" # Tindac with clear screen
-alias tindac='e "Cleanup:" && dclean; e "Deploy:" && tind' # Clean Infinito.Nexus testdeploy to Arch with act
-alias tind="act -W .github/workflows/test-deploy-server.yml -j test-deploy-server --matrix distro:arch --privileged --network host --concurrent-jobs 1"
-alias tint='m test-integration' # Execute integration test
-alias tlog='f(){ local cmd="${aliases[$1]:-$1}"; eval "$cmd" 2>&1 | tee "${2:-$HOME/log.txt}"; }; f' # Usage: tlog <alias-or-cmd> [logfile]
+alias tlog='f(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; f' # tlog <alias|cmd> [logfile]
 alias tunit='m test-unit' # make test-unit
 alias xc='xclip -selection clipboard'
-alias zc='zc(){ local z="${1:-/tmp/packed.zip}"; [ -e "$z" ] && { printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$z"; read _; }; rm -f "$z" && zip -vr "$z" *; }; zc' # ZIP current without hidden files
+alias zc='f(){ local z="${1:-$(azf)}"; [ -e "$z" ] && enter "$z"; rm -f -- "$z"; zip -vr -- "$z" *; }; f' # zip cwd (no dotfiles)
+alias zulu='date -u +%Y%m%dT%H%M%SZ' # ISO-8601 basic, UTC, Zulu
 alias z="zip"
