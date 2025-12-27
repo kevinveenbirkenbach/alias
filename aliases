@@ -94,6 +94,7 @@ alias te2e0='0 && te2e'
 alias te2e0l='tlog te2e0'
 alias te2e='m test-e2e' # Execute integration tests
 alias tlog='f(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; f' # tlog <alias|cmd> [logfile]
+alias t='p terminal'
 alias tunit='m test-unit' # make test-unit
 alias xc='xclip -selection clipboard'
 alias zc='f(){ local z="${1:-$(azf)}"; [ -e "$z" ] && enter "$z"; rm -f -- "$z"; zip -vr -- "$z" *; }; f' # zip cwd (no dotfiles)
