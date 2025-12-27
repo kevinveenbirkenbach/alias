@@ -45,6 +45,7 @@ alias dstopa='d stop $(docker ps -aq) 2>/dev/null' # Stopps all docker container
 alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker related on the system
 alias e='echo' # echo
 alias enter='f(){ printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$1"; read -r _; }; f' # confirm overwrite
+alias gi0="gioc . && gioh . && gio0 && girec && gis" # Reset head and checkout all
 alias giaa='gia --all' # git add --all
 alias gia="gi add"
 alias giau="giaa && giup" # git add --all, commit and push
@@ -61,7 +62,6 @@ alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
 alias gio0='gi clean -fdX .' # Executes 'git clean -fdX .' and deletes all untracked files
-alias gioa="gioc . && gioh . && gio0 && girec && gis" # Reset head and checkout all
 alias gioc='gi checkout' # Executes 'git checkout'
 alias gioh='gi reset HEAD' # Resets git head
 alias gipd="gi pull"
