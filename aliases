@@ -20,8 +20,8 @@ alias arename='f(){ (a rename old="$1" new="$2" && asort) }; f'
 alias asearch='f(){ (a search q="$1"); }; f'
 alias asort="(a sort)"
 alias au='(a update) && source ~/.config/shell/aliases'
+alias ausa='(aus && ada)' # update, add, commit, and push alias
 alias aus='asort && au' # Sort and update aliases
-alias auspu='(aus && ada)' # update, add, commit, and push alias
 alias bsra='f(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; f' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
 alias dbuild='f(){ docker build -t "$1" .; }; f' # Build local Dockerfile $1 => image name
@@ -50,13 +50,16 @@ alias gidil='gidic $(gilata)' # Changes since last tag
 alias gidis='gid --staged'
 alias gidisx='gidis | xc && gidis'
 alias gi="git"
-alias gilata='git describe --tags --abbrev=0' # Latest git tag
+alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
-alias giout='gi checkout' # Executes 'git checkout'
+alias gioa="gioh && gioc" # Reset head and checkout all
+alias gioc='gi checkout' # Executes 'git checkout'
+alias gioh='gi reset HEAD' # Resets git head
 alias gipd="gi pull"
 alias gipu="gi push"
-alias girh='gi reset HEAD' # Resets git head
 alias gis='gi status' # Git status
+alias gist='gist apply' # Git stash apply
+alias gist='gi stash' # Git stash
 alias giup="gico && gipu"
 alias mi='m install'
 alias m='make'
