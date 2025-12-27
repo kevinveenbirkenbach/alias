@@ -52,11 +52,12 @@ alias gidisx='gidis | xc && gidis'
 alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
-alias gioa="gioh && gioc" # Reset head and checkout all
+alias gioa="gioc && gioh && gi0 && gire && gis" # Reset head and checkout all
 alias gioc='gi checkout' # Executes 'git checkout'
 alias gioh='gi reset HEAD' # Resets git head
 alias gipd="gi pull"
 alias gipu="gi push"
+alias gire="gi restore" # Deletes all unstaged files
 alias gis='gi status' # Git status
 alias gist='gist apply' # Git stash apply
 alias gist='gi stash' # Git stash
