@@ -73,6 +73,7 @@ alias gista='gi stash' # Git stash
 alias gist='gist apply' # Git stash apply
 alias giup="gico && gipu"
 alias giuser='gi config user.name'
+alias inad='arcx .github/workflows/test-deploy-server.yml Makefile Dockerfile scripts cli/deploy cli/create/inventory/ docker-compose.yml tests/dns/Corefile'
 alias intd0="0 && intdc" # Tindac with clear screen
 alias intdc='e "Cleanup:" && dclean; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
 alias intdo="tlog intd0" # Test infinito deploy and log (Omega command)
