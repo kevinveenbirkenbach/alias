@@ -38,6 +38,7 @@ alias dc0='dc down'
 alias dc0o='dc0 -v'
 alias dc='d compose'
 alias d='docker'
+alias de='__de(){ docker exec -it $1 sh; }; __de'
 alias dp='__dp(){ umask 077; mkdir -p -- "$1"; printf "%s" "$1"; }; __dp' # create protected dir (0700), echo path
 alias dpsa='d -a'
 alias dps='d ps'
