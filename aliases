@@ -1,3 +1,4 @@
+
 alias 0='clear' # clear screen
 alias a='acd && m' # Call alias 'make'
 alias acd='pcd alias' # Change to alias repo directory
@@ -97,6 +98,6 @@ alias tlog='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)
 alias t='p terminal'
 alias tunit='m test-unit' # make test-unit
 alias xc='xclip -selection clipboard'
-alias zc='__zc(){ local z="${1:-$(azf)}"; [ -e "$z" ] && enter "$z"; rm -f -- "$z"; zip -vr "$z" *; }; __zc' # zip cwd (no dotfiles)
+alias zc='__zc(){ local z="${1:-$(azf)}"; if [ -e "$z" ]; then printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$z"; read -r _; fi; rm -f -- "$z"; zip -vr "$z" *; }; __zc' # zip cwd (no dotfiles)
 alias zulu='date -u +%Y%m%dT%H%M%SZ' # ISO-8601 basic, UTC, Zulu
 alias z="zip"
