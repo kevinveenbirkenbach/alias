@@ -1,4 +1,3 @@
-
 alias 0='clear' # clear screen
 alias a='acd && m' # Call alias 'make'
 alias acd='pcd alias' # Change to alias repo directory
@@ -6,7 +5,7 @@ alias ac='pc alias' # Edit aliases
 alias ada='(acd && giaa && gicoa && gipu)' # add, commit, and push alias
 alias aedit='nano "$(afile)"' # Edit aliases file
 alias aeditu='aedit && aus'
-alias aexport='f(){ (a export a="$1";) }; f'
+alias aexport='__aexport(){ (a export a="$1";) }; __aexport'
 alias afact='(acd && m refactor)' # Refactors aliases
 alias afile='e "$(apath)/aliases"'
 alias ald='dp "$(atmp)/log"' # log dir
@@ -16,27 +15,27 @@ alias anewa='anew && ada' # Autopublishing of command
 alias anew='(acd && m add && aus)' # Add new alias
 alias ao='aus && ada' # update, add, commit, and push alias (Alpha and Omega ;) )
 alias apath='p path alias'
-alias arci='arcix .'
-alias arcix='arc -qxI .md LICENSE --' # Copys all files into clippboard except .md
+alias arci='arc -qxI .md LICENSE --' # Copys all files into clippboard except .md
+alias arco='arcix .'
 alias arcx='arc -qx --'
-alias arename='f(){ (a rename old="$1" new="$2" && asort) }; f'
-alias asearch='f(){ (a search q="$1"); }; f'
+alias arename='__arename(){ (a rename old="$1" new="$2" && asort) }; __arename'
+alias asearch='__asearch(){ (a search q="$1"); }; __asearch'
 alias asort="(a sort)"
 alias atmp='dp /tmp/alias' # base temp dir
 alias atmpo='n "$(atmp)"'
-alias au='(a update) && source ~/.config/shell/aliases'
+alias au='a update; source ~/.config/shell/aliases'
 alias aus='asort && au' # Sort and update aliases
-alias azd='dp "$(atmp)/zip"' # zip dir
-alias azf='e "$(azd)/$(zulu).zip"' # default zip file path
-alias bsra='f(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; f' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
+alias azd='__azd(){ umask 077; mkdir -p -- "$(atmp)/zip"; printf "%s" "$(atmp)/zip"; }; __azd' # zip dir
+alias azf='__azf(){ printf "%s" "$(azd)/$(zulu).zip"; }; __azf' # default zip file path
+alias bsra='__bsra(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; __bsra' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
-alias dbuild='f(){ docker build -t "$1" .; }; f' # Build local Dockerfile $1 => image name
+alias dbuild='__dbuild(){ docker build -t "$1" .; }; __dbuild' # Build local Dockerfile $1 => image name
 alias dc='d compose'
 alias dcdown='dc down'
 alias dcdownv='dcdown -v'
 alias dclean="dstopa && drmall && drmvolall"
 alias d='docker'
-alias dp='f(){ umask 077; mkdir -p -- "$1"; e "$1"; }; f' # create protected dir (0700), echo path
+alias dp='__dp(){ umask 077; mkdir -p -- "$1"; printf "%s" "$1"; }; __dp' # create protected dir (0700), echo path
 alias dpurge='dclean && dsystemprune' # Deletes everything docker related
 alias drmall='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
 alias drmvolall='d volume rm $(docker volume ls -q) 2>/dev/null' # Removes all docker volumes
@@ -44,16 +43,16 @@ alias drun='docker run --rm' #Runs image
 alias dstopa='d stop $(docker ps -aq) 2>/dev/null' # Stopps all docker containers
 alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker related on the system
 alias e='echo' # echo
-alias enter='f(){ printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$1"; read -r _; }; f' # confirm overwrite
+alias enter='__enter(){ printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$1"; read -r _; }; __enter' # confirm overwrite
 alias gi0="gioc . && gioh . && gio0 && girec && gis" # Reset head and checkout all
 alias giaa='gia --all' # git add --all
 alias gia="gi add"
 alias giau="giaa && giup" # git add --all, commit and push
 alias giax='giaa && gidisx'
 alias giclo='gi clone' # Executes 'git clone'
-alias gicoa='f(){ gico -m "automatic commit by $(giuser) - $(zulu)"; }; f'
+alias gicoa='__gicoa(){ gico -m "automatic commit by $(giuser) - $(zulu)"; }; __gicoa'
 alias gico="gi commit"
-alias gidic='f(){ gidi "$1"..HEAD | tee >(xc >/dev/null) | less; }; f' # All changes accumulated since commit
+alias gidic='__gidic(){ gidi "$1"..HEAD | tee >(xc >/dev/null) | less; }; __gidic' # All changes accumulated since commit
 alias gidi="gi diff"
 alias gidil='gidic $(gilata)' # Changes since last tag
 alias gidis='gidi --staged'
@@ -80,8 +79,8 @@ alias intd="(pcd infinito && act -W .github/workflows/test-deploy-server.yml -j 
 alias inti='m test-integration' # Execute integration test
 alias mi='m install'
 alias m='make'
-alias n='f(){ nohup nautilus "${1:-$PWD}" >/dev/null 2>&1 & disown; }; f' # Executes nautilus to explore the (current) directory
-alias pcd='f(){ cd "$(pp "$1")"; }; f' # Change directory to packagemanager package
+alias n='__n(){ nohup nautilus "${1:-$PWD}" >/dev/null 2>&1 & disown; }; __n' # Executes nautilus to explore the (current) directory
+alias pcd='__pcd(){ cd "$(pp "$1")"; }; __pcd' # Change directory to packagemanager package
 alias pcoin='p config init' # Executes 'pkgmgr config init'
 alias pc='p code' # Opens pkgmgr code
 alias pe='p explore' # Opens GNOME for pkgmgr package
@@ -94,10 +93,10 @@ alias pr='p release'
 alias te2e0='0 && te2e'
 alias te2e0l='tlog te2e0'
 alias te2e='m test-e2e' # Execute integration tests
-alias tlog='f(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; f' # tlog <alias|cmd> [logfile]
+alias tlog='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; __tlog' # tlog <alias|cmd> [logfile]
 alias t='p terminal'
 alias tunit='m test-unit' # make test-unit
 alias xc='xclip -selection clipboard'
-alias zc='f(){ local z="${1:-$(azf)}"; [ -e "$z" ] && enter "$z"; rm -f -- "$z"; zip -vr -- "$z" *; }; f' # zip cwd (no dotfiles)
+alias zc='__zc(){ local z="${1:-$(azf)}"; [ -e "$z" ] && enter "$z"; rm -f -- "$z"; zip -vr "$z" *; }; __zc' # zip cwd (no dotfiles)
 alias zulu='date -u +%Y%m%dT%H%M%SZ' # ISO-8601 basic, UTC, Zulu
 alias z="zip"
