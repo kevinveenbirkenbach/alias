@@ -51,6 +51,7 @@ alias gidis='gid --staged'
 alias gidisx='gidis | xc && gidis'
 alias gi="git"
 alias gilata='git describe --tags --abbrev=0' # Latest git tag
+alias gil='gi log' # Show git logs
 alias giout='gi checkout' # Executes 'git checkout'
 alias gipd="gi pull"
 alias gipu="gi push"
