@@ -105,6 +105,7 @@ alias pr='p release'
 alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruff
 alias sshal='ssh alphaserver'
 alias ssha='ssh galaxyserver'
+alias sshe='ssh echoserver'
 alias te2e0='0 && te2e'
 alias te2e0l='l te2e0'
 alias te2e='m test-e2e' # Execute integration tests
