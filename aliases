@@ -59,8 +59,9 @@ alias gico="gi commit"
 alias gidic='__gidic(){ gidi "$1"..HEAD | tee >(xc >/dev/null) | less; }; __gidic' # All changes accumulated since commit
 alias gidi="gi diff"
 alias gidil='gidic $(gilata)' # Changes since last tag
+alias gidilo='xs gidil' # Changes since last tag
 alias gidis='gidi --staged'
-alias gidisx='gidis | xc && gidis'
+alias gidisx='xs gidis'
 alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
@@ -105,6 +106,7 @@ alias tint='m test-integration' # Execute integration test
 alias t='p terminal'
 alias tunit='m test-unit' # make test-unit
 alias xc='xclip -selection clipboard'
+alias xs='__xs(){ eval "$*" | tee >(xc >/dev/null) | less -R; }; __xs'
 alias zc='__zc(){ local z="${1:-$(azf)}"; if [ -e "$z" ]; then printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$z"; read -r _; fi; rm -f -- "$z"; zip -vr "$z" *; }; __zc' # zip cwd (no dotfiles)
 alias zulu='date -u +%Y%m%dT%H%M%SZ' # ISO-8601 basic, UTC, Zulu
 alias z="zip"
