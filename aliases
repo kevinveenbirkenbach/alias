@@ -17,7 +17,7 @@ alias anew='(acd && m add && aus)' # Add new alias
 alias ao='aus && ada' # update, add, commit, and push alias (Alpha and Omega ;) )
 alias apath='p path alias'
 alias arci='arc -qxI .md LICENSE --' # Copys all files into clippboard except .md
-alias arco='arcix .'
+alias arco='arcx .'
 alias arcx='arc -qx --'
 alias arename='__arename(){ (a rename old="$1" new="$2" && asort) }; __arename'
 alias asearch='__asearch(){ (a search q="$1"); }; __asearch'
@@ -81,7 +81,6 @@ alias intd0="0 && intdc" # Tindac with clear screen
 alias intdc='e "Cleanup:" && d0o; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
 alias intdo="l intd0" # Test infinito deploy and log (Omega command)
 alias intd="(pcd infinito && act -W .github/workflows/test-deploy-server.yml -j test-deploy-server --matrix distro:arch --privileged --network host --concurrent-jobs 1)"
-alias inti='m test-integration' # Execute integration test
 alias l='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; __tlog' # l <alias|cmd> [logfile]
 alias mi='m install'
 alias m='make'
@@ -100,6 +99,7 @@ alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruf
 alias te2e0='0 && te2e'
 alias te2e0l='l te2e0'
 alias te2e='m test-e2e' # Execute integration tests
+alias tint='m test-integration' # Execute integration test
 alias t='p terminal'
 alias tunit='m test-unit' # make test-unit
 alias xc='xclip -selection clipboard'
