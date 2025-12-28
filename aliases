@@ -90,6 +90,7 @@ alias m='make'
 alias n='__n(){ nohup nautilus "${1:-$PWD}" >/dev/null 2>&1 & disown; }; __n' # Executes nautilus to explore the (current) directory
 alias pcdci='pcd computer-inventory' # changes to computer-inventory folder
 alias pcd='__pcd(){ cd "$(pp "$1")"; }; __pcd' # Change directory to packagemanager package
+alias pci='pcd infinito'
 alias pcoin='p config init' # Executes 'pkgmgr config init'
 alias pc='p code' # Opens pkgmgr code
 alias pe='p explore' # Opens GNOME for pkgmgr package
