@@ -96,6 +96,7 @@ alias prma='pr major'
 alias prmi='pr minor'
 alias prpa='pr patch'
 alias pr='p release'
+alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruff
 alias te2e0='0 && te2e'
 alias te2e0l='l te2e0'
 alias te2e='m test-e2e' # Execute integration tests
