@@ -89,6 +89,7 @@ alias pcd='__pcd(){ cd "$(pp "$1")"; }; __pcd' # Change directory to packagemana
 alias pcoin='p config init' # Executes 'pkgmgr config init'
 alias pc='p code' # Opens pkgmgr code
 alias pe='p explore' # Opens GNOME for pkgmgr package
+alias pms='p mirror setup' # Setup mirrors local
 alias p='pkgmgr' # Executes pkgmgr
 alias pp='p path' # Package manager path
 alias prma='pr major'
