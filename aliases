@@ -20,7 +20,7 @@ alias arci='arc -qxI .md LICENSE --' # Copys all files into clippboard except .m
 alias arco='arcx .'
 alias arcx='arc -qx --'
 alias arename='__arename(){ (a rename old="$1" new="$2" && asort) }; __arename'
-alias asearch='__asearch(){ (a search q="$1"); }; __asearch'
+alias ask='__asearch(){ (a search q="$1"); }; __asearch'
 alias asort="(a sort)"
 alias atmp='dp /tmp/alias' # base temp dir
 alias atmpo='n "$(atmp)"'
