@@ -64,7 +64,7 @@ alias gidilo='xs gidil' # Changes since last tag
 alias gidis='gidi --staged'
 alias gidisx='xs gidis'
 alias gidiv='gil "$(git describe --tags --abbrev=0)"..HEAD'
-alias gidivo='xx gidiv'
+alias gidivo='xs gidiv'
 alias gidix='xs gidic' # diffs to this comment into clipboard
 alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
@@ -117,7 +117,6 @@ alias t='p terminal'
 alias tunit='m test-unit' # make test-unit
 alias xc='xclip -selection clipboard'
 alias xs='__xs(){ eval "$*" | tee >(xc >/dev/null) | less -R; }; __xs'
-alias xx='__xx(){ xc $1 && $1 }; __xx' # Copy to clipboard and execute
 alias zc='__zc(){ local z="${1:-$(azf)}"; if [ -e "$z" ]; then printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$z"; read -r _; fi; rm -f -- "$z"; zip -vr "$z" *; }; __zc' # zip cwd (no dotfiles)
 alias zulu='date -u +%Y%m%dT%H%M%SZ' # ISO-8601 basic, UTC, Zulu
 alias z="zip"
