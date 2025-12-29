@@ -63,6 +63,7 @@ alias gidil='gidic $(gilata)' # Changes since last tag
 alias gidilo='xs gidil' # Changes since last tag
 alias gidis='gidi --staged'
 alias gidisx='xs gidis'
+alias gidix='xs gidic' # diffs to this comment into clipboard
 alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
