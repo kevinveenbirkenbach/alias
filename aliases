@@ -61,11 +61,11 @@ alias gidic='__gidic(){ gidi "$1"..HEAD | tee >(xc >/dev/null) | less; }; __gidi
 alias gidi="gi diff"
 alias gidil='gidic $(gilata)' # Changes since last tag
 alias gidilo='xs gidil' # Changes since last tag
-alias gidis='gidi --staged'
-alias gidisx='xs gidis'
+alias gidisx='xs gido'
 alias gidiv='gil "$(git describe --tags --abbrev=0)"..HEAD'
 alias gidivo='xs gidiv'
 alias gidix='xs gidic' # diffs to this comment into clipboard
+alias gido='gidi --staged'
 alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
