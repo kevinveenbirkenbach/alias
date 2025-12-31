@@ -18,7 +18,7 @@ alias ao='aus && ada' # update, add, commit, and push alias (Alpha and Omega ;) 
 alias apath='p path alias'
 alias arci='arc -qxI .md LICENSE --' # Copys all files into clippboard except .md
 alias arco='arcx .'
-alias arcs='gisl | xargs -0 bash -lc '\''arcx "$@"'\'' _' # Content of all staged files
+alias arcs='gisl | xargs -0 bash -c '\''arc -qx -- "$@"'\'' _' # Content of all staged files
 alias arcx='arc -qx --'
 alias arename='__arename(){ (a rename old="$1" new="$2" && asort) }; __arename'
 alias ask='__asearch(){ (a search q="$1"); }; __asearch'
