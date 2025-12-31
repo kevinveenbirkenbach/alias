@@ -18,6 +18,7 @@ alias ao='aus && ada' # update, add, commit, and push alias (Alpha and Omega ;) 
 alias apath='p path alias'
 alias arci='arc -qxI .md LICENSE --' # Copys all files into clippboard except .md
 alias arco='arcx .'
+alias arcs='gisl | xargs -0 -r arcx' # Content of all staged files
 alias arcx='arc -qx --'
 alias arename='__arename(){ (a rename old="$1" new="$2" && asort) }; __arename'
 alias ask='__asearch(){ (a search q="$1"); }; __asearch'
@@ -48,7 +49,6 @@ alias dstopa='d stop $(docker ps -aq) 2>/dev/null' # Stopps all docker container
 alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker related on the system
 alias e='echo' # echo
 alias enter='__enter(){ printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$1"; read -r _; }; __enter' # confirm overwrite
-alias GI02='sudo gio0' # Cleans up git with root priviliges
 alias gi0="gioc . && gioh . && gio0 && girec && gis" # Reset head and checkout all
 alias giaa='gia --all' # git add --all
 alias gia="gi add"
@@ -78,15 +78,16 @@ alias gipu="gi push"
 alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
 alias gis='gi status' # Git status
+alias gisl="gidi --cached --name-only -z" # All staged files
 alias gista='gi stash' # Git stash
 alias gist='gist apply' # Git stash apply
 alias giup="gico && gipu"
 alias giuser='gi config user.name'
 alias inax='arcx .github/workflows/test-deploy-server.yml Makefile Dockerfile scripts cli/deploy cli/create/inventory/ docker-compose.yml compose/'
 alias indepo='__indepo(){ local host="$1"; shift; infinito deploy dedicated ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/servers.yml --limit "$host" --password-file ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/.pass/"$host".txt "$@"; }; __indepo'
+alias indo="l intd0" # Test infinito deploy and log (Omega command)
 alias intd0="0 && intdc" # Tindac with clear screen
 alias intdc='e "Cleanup:" && d0o; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
-alias intdo="l intd0" # Test infinito deploy and log (Omega command)
 alias intd="(pcd infinito && act -W .github/workflows/test-deploy-server.yml -j test-deploy-server --matrix distro:arch --privileged --network host --concurrent-jobs 1)"
 alias intro='0 && (pcd infinito && l "m test-deploy")' # Rapid local deploy test
 alias l='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; __tlog' # l <alias|cmd> [logfile]
@@ -119,7 +120,7 @@ alias tint='m test-integration' # Execute integration test
 alias t='p terminal'
 alias tunit='m test-unit' # make test-unit
 alias xc='xclip -selection clipboard'
-alias xs='__xs(){ eval "$*" | tee >(xc >/dev/null) | less -R; }; __xs'
+alias xs='__xs(){ eval "$*" | tee >(xc >/dev/null) | less -R; }; __xs' # Show unformated
 alias zc='__zc(){ local z="${1:-$(azf)}"; if [ -e "$z" ]; then printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$z"; read -r _; fi; rm -f -- "$z"; zip -vr "$z" *; }; __zc' # zip cwd (no dotfiles)
 alias zulu='date -u +%Y%m%dT%H%M%SZ' # ISO-8601 basic, UTC, Zulu
 alias z="zip"
