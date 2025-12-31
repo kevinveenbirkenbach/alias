@@ -18,7 +18,7 @@ alias ao='aus && ada' # update, add, commit, and push alias (Alpha and Omega ;) 
 alias apath='p path alias'
 alias arci='arc -qxI .md LICENSE --' # Copys all files into clippboard except .md
 alias arco='arcx .'
-alias arcs='gisl | xargs -0 bash -c '\''arc -qx -- "$@"'\'' _' # Content of all staged files
+alias arcs='arcx $(gisl)' # Content of all staged files
 alias arcx='arc -qx --'
 alias arename='__arename(){ (a rename old="$1" new="$2" && asort) }; __arename'
 alias ask='__asearch(){ (a search q="$1"); }; __asearch'
@@ -78,7 +78,7 @@ alias gipu="gi push"
 alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
 alias gis='gi status' # Git status
-alias gisl="gidi --cached --name-only -z" # All staged files
+alias gisl="git diff --cached --name-only | tr '\n' ' '" # All staged files
 alias gista='gi stash' # Git stash
 alias gist='gist apply' # Git stash apply
 alias giup="gico && gipu"
