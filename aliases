@@ -88,8 +88,7 @@ alias indepo='__indepo(){ local host="$1"; shift; infinito deploy dedicated ~/Re
 alias indo="l intd0" # Test infinito deploy and log (Omega command)
 alias intd0="0 && intdc" # Tindac with clear screen
 alias intdc='e "Cleanup:" && d0o; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
-alias intd="(pcd infinito && act -W .github/workflows/test-deploy-server.yml -j test-deploy-server --matrix distro:arch --privileged --network host --concurrent-jobs 1)"
-alias intro='0 && (pcd infinito && l "m test-deploy")' # Rapid local deploy test
+alias intd="(pcd infinito && m test-deploy)"
 alias l='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; __tlog' # l <alias|cmd> [logfile]
 alias mi='m install'
 alias m='make'
