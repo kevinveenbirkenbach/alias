@@ -83,6 +83,7 @@ alias gista='gi stash' # Git stash
 alias gist='gist apply' # Git stash apply
 alias giup="gico && gipu"
 alias giuser='gi config user.name'
+alias ina='d exec -it infinito_nexus_arch sh' # sh into default infinito container
 alias inax='arcx .github/workflows/test-deploy-server.yml Makefile Dockerfile scripts cli/deploy cli/create/inventory/ docker-compose.yml compose/'
 alias inda='__inda(){ l "pcd infinito && APP=\"${1:?Usage: inda <application_id>}\" m test-deploy-app"; }; __inda'
 alias indepo='__indepo(){ local host="$1"; shift; infinito deploy dedicated ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/servers.yml --limit "$host" --password-file ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/.pass/"$host".txt "$@"; }; __indepo'
