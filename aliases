@@ -34,6 +34,7 @@ alias c='code' # Execute code
 alias d0c='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
 alias d0o="dstopa && d0c && d0v"
 alias d0v='d volume rm $(docker volume ls -q) 2>/dev/null' # Removes all docker volumes
+alias dact0='dpsa --filter "name=act" -q | xargs -r docker rm -f'
 alias dbuild='__dbuild(){ docker build -t "$1" .; }; __dbuild' # Build local Dockerfile $1 => image name
 alias dc0='dc down'
 alias dc0o='dc0 -v'
@@ -88,6 +89,7 @@ alias inax='arcx .github/workflows/test-deploy-server.yml Makefile Dockerfile sc
 alias inda='__inda(){ l "pcd infinito && APP=\"${1:?Usage: inda <application_id>}\" m test-deploy-app"; }; __inda'
 alias indepo='__indepo(){ local host="$1"; shift; infinito deploy dedicated ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/servers.yml --limit "$host" --password-file ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/.pass/"$host".txt "$@"; }; __indepo'
 alias indo="l intd0" # Test infinito deploy and log (Omega command)
+alias inra='__inra(){ l "pcd infinito && APP=\"${1:?Usage: inra <application_id>}\" m test-deploy-rapid"; }; __inra'
 alias intd0="0 && intdc" # Tindac with clear screen
 alias intdc='e "Cleanup:" && d0o; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
 alias intd="(pcd infinito && m test-deploy)"
