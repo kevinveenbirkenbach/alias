@@ -31,6 +31,7 @@ alias azd='__azd(){ umask 077; mkdir -p -- "$(atmp)/zip"; printf "%s" "$(atmp)/z
 alias azf='__azf(){ printf "%s" "$(azd)/$(zulu).zip"; }; __azf' # default zip file path
 alias bsra='__bsra(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; __bsra' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
+alias cosy='__cosy(){pcd config && m sync}; __cosy'
 alias d0c='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
 alias d0o="dstopa && d0c && d0v"
 alias d0v='d volume rm $(docker volume ls -q) 2>/dev/null' # Removes all docker volumes
