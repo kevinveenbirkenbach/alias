@@ -3,7 +3,7 @@ alias 0='clear' # clear screen
 alias a='acd && m' # Call alias 'make'
 alias acd='pcd alias' # Change to alias repo directory
 alias ac='pc alias' # Edit aliases
-alias ada='(acd && giaa && gicoa && gipu)' # add, commit, and push alias
+alias ada='(acd && giau)' # add, commit, and push alias
 alias aedit='nano "$(afile)"' # Edit aliases file
 alias aeditu='aedit && aus'
 alias aexport='__aexport(){ (a export a="$1";) }; __aexport'
@@ -31,6 +31,11 @@ alias azd='__azd(){ umask 077; mkdir -p -- "$(atmp)/zip"; printf "%s" "$(atmp)/z
 alias azf='__azf(){ printf "%s" "$(azd)/$(zulu).zip"; }; __azf' # default zip file path
 alias bsra='__bsra(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; __bsra' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
+alias coad='__coad(){ chezmoi add "${1}"}; __coad' # Add new file to chezmoi
+alias coap="chezmoi apply"
+alias co="echo 'Alpha & Omega Config' && (copu;cosy)"
+alias copu="echo 'Commit Config' && (pcd config && giau)"
+alias cosy='echo "Sync Config" && ((pcd config && m sync) || pkgmgr status --all) && coap'
 alias d0c='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
 alias d0o="dstopa && d0c && d0v"
 alias d0v='d volume rm $(docker volume ls -q) 2>/dev/null' # Removes all docker volumes
@@ -54,7 +59,7 @@ alias gi0="gioc . && gioh . && gio0 && girec && gis" # Reset head and checkout a
 alias giaa='gia --all' # git add --all
 alias gia="gi add"
 alias giao='giax && giup' # git add --all
-alias giau="giaa && giup" # git add --all, commit and push
+alias giau="giaa && gicoa && gipu" # git add --all, commit and push
 alias giax='giaa && gido'
 alias giclo='gi clone' # Executes 'git clone'
 alias gicoa='__gicoa(){ gico -m "automatic commit by $(giuser) - $(zulu)"; }; __gicoa'
@@ -67,7 +72,7 @@ alias gidis='gidi --staged'
 alias gidiv='gil "$(git describe --tags --abbrev=0)"..HEAD'
 alias gidivo='xs gidiv'
 alias gidix='xs gidic' # diffs to this comment into clipboard
-alias gido='xs gidis'
+alias gido='(gidis | xc) && gidis'
 alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
@@ -99,6 +104,7 @@ alias l='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}";
 alias mi='m install'
 alias m='make'
 alias n='__n(){ nohup nautilus "${1:-$PWD}" >/dev/null 2>&1 & disown; }; __n' # Executes nautilus to explore the (current) directory
+alias o="ao; co"
 alias pc2i='pc computer-inventory' # change to computer-inventory
 alias pcdci='pcd computer-inventory' # changes to computer-inventory folder
 alias pcd='__pcd(){ cd "$(pp "$1")"; }; __pcd' # Change directory to packagemanager package
@@ -114,6 +120,7 @@ alias prma='pr major'
 alias prmi='pr minor'
 alias prp='pr patch'
 alias pr='p release'
+alias psa='p status --all ' # Show status off all repos
 alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruff
 alias ssha='ssh alphaserver'
 alias sshe='ssh echoserver'
