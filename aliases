@@ -94,8 +94,8 @@ alias inax='arcx .github/workflows/test-deploy-server.yml Makefile Dockerfile sc
 alias inda='__inda(){ l "pcd infinito && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-deploy-app"; }; __inda' # Default test deploy of app
 alias indepo='__indepo(){ local host="$1"; shift; infinito deploy dedicated ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/servers.yml --limit "$host" --password-file ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/.pass/"$host".txt "$@"; }; __indepo'
 alias indo="l intd0" # Test infinito deploy and log (Omega command)
-alias inlora='__inra(){ l "pcd infinito && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-local-rapid"; }; __inra' # Rapid test deploy
 alias inlofu='__inlofu(){ l "pcd infinito && m test-local-full"; }; __inlofu' # Rapid test deploy
+alias inlora='__inra(){ l "pcd infinito && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-local-rapid"; }; __inra' # Rapid test deploy
 alias intd0="0 && intdc" # Tindac with clear screen
 alias intdc='e "Cleanup:" && d0o; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
 alias intd="(pcd infinito && m test-deploy)"
