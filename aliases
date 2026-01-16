@@ -68,7 +68,7 @@ alias gidis='gidi --staged'
 alias gidiv='gil "$(git describe --tags --abbrev=0)"..HEAD'
 alias gidivo='xs gidiv'
 alias gidix='xs gidic' # diffs to this comment into clipboard
-alias gido='xs gidis'
+alias gido='(gidis | xc) && gidis'
 alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
