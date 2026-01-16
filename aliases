@@ -16,9 +16,9 @@ alias anewa='anew && ada' # Autopublishing of command
 alias anew='(acd && m add && aus)' # Add new alias
 alias ao='aus && ada' # update, add, commit, and push alias (Alpha and Omega ;) )
 alias apath='p path alias'
+alias arce='__arce(){ rg -l -0 "$1" | xargs -0 arc -qx --; }; __arce'
 alias arci='arc -qxI *.md LICENSE --' # Copys all files into clippboard except .md
 alias arco='arcx .'
-alias arcs='__arcs(){ (rg -l "$1" | arcx); }; __arcs'
 alias arcs='arcx $(gisl)' # content of all staged files
 alias arcx='arc -qx --'
 alias arename='__arename(){ (a rename old="$1" new="$2" && asort) }; __arename'
