@@ -32,7 +32,7 @@ alias azf='__azf(){ printf "%s" "$(azd)/$(zulu).zip"; }; __azf' # default zip fi
 alias bsra='__bsra(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; __bsra' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
 alias coad='__coad(){ chezmoi add "${1}"}; __coad' # Add new file to chezmoi
-alias co="(copu && cosy)"
+alias co="echo 'Publish and sync all config changes' && (copu && cosy)"
 alias copu="(pcd config && giau)"
 alias cosy='(pcd config && m sync) || pkgmgr status --all'
 alias d0c='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
