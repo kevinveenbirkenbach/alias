@@ -31,7 +31,7 @@ alias azd='__azd(){ umask 077; mkdir -p -- "$(atmp)/zip"; printf "%s" "$(atmp)/z
 alias azf='__azf(){ printf "%s" "$(azd)/$(zulu).zip"; }; __azf' # default zip file path
 alias bsra='__bsra(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; __bsra' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
-alias cosy='__cosy(){pcd config && m sync}; __cosy'
+alias cosy='__cosy(){pcd config && m sync || pkgmgr status --all}; __cosy'
 alias d0c='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
 alias d0o="dstopa && d0c && d0v"
 alias d0v='d volume rm $(docker volume ls -q) 2>/dev/null' # Removes all docker volumes
@@ -114,6 +114,7 @@ alias prma='pr major'
 alias prmi='pr minor'
 alias prp='pr patch'
 alias pr='p release'
+alias psa='p status --all ' # Show status off all repos
 alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruff
 alias ssha='ssh alphaserver'
 alias sshe='ssh echoserver'
