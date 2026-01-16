@@ -32,6 +32,7 @@ alias azd='__azd(){ umask 077; mkdir -p -- "$(atmp)/zip"; printf "%s" "$(atmp)/z
 alias azf='__azf(){ printf "%s" "$(azd)/$(zulu).zip"; }; __azf' # default zip file path
 alias bsra='__bsra(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; __bsra' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
+alias checkshell='shellcheck -x $(find scripts -type f -name '"'"'*.sh'"'"' -print)' # Starts shellcheck
 alias coad='__coad(){ chezmoi add "${1}"}; __coad' # Add new file to chezmoi
 alias coap="chezmoi apply"
 alias co="echo 'Alpha & Omega Config' && (copu;cosy)"
@@ -99,7 +100,7 @@ alias inlofu='__inlofu(){ l "pcd infinito && m test-local-full"; }; __inlofu' # 
 alias inlora='__inra(){ l "pcd infinito && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-local-rapid"; }; __inra' # Rapid test deploy
 alias intd0="0 && intdc" # Tindac with clear screen
 alias intdc='e "Cleanup:" && d0o; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
-alias intd="(pcd infinito && m test-deploy)"
+alias intd="(pcd infinito && m test-local-full)"
 alias intro="l intd" # deploy ohne cleanup
 alias l='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; __tlog' # l <alias|cmd> [logfile]
 alias mi='m install'
