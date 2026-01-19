@@ -129,7 +129,8 @@ alias prp='pr patch'
 alias pr='p release'
 alias psa='p status --all ' # Show status off all repos
 alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruff
-alias shj='shrt 100000 /home/kevinveenbirkenbach/Downloads/job-logs.txt' # shortcut for your job log file: shj  (shrinks to 100000 lines)
+alias shjo='__shjo(){ f="$HOME/Downloads/job-txt-$(zulu).log"; curl -fL "$1" -o "$f" && shj "$f"; }; __shjo' # download URL to job-txt-(zulu).log and shrink it
+alias shj='__shj(){ shrt 100000 "${1:-$(ls -t ~/Downloads/job-txt-*.log 2>/dev/null | head -n1)}"; }; __shj' # shrink newest job-txt-*.log (or given file) to 100000 lines
 alias shrt='__shrt(){ local n="$1"; local f="$2"; tail -n "$n" -- "$f" > "${f}.tmp" && mv -- "${f}.tmp" "$f"; }; __shrt' # shrink file to last N lines: shrt <lines> <file>
 alias ssha='ssh alphaserver'
 alias sshe='ssh echoserver'
