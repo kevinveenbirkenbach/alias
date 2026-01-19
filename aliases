@@ -38,6 +38,7 @@ alias coap="chezmoi apply"
 alias co="echo 'Alpha & Omega Config' && (copu;cosy)"
 alias copu="echo 'Commit Config' && (pcd config && giau)"
 alias cosy='echo "Sync Config" && ((pcd config && m sync) || pkgmgr status --all) && coap'
+alias cs='checkshell'
 alias d0c='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
 alias d0o="dstopa && d0c && d0v"
 alias d0v='d volume rm $(docker volume ls -q) 2>/dev/null' # Removes all docker volumes
