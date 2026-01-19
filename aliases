@@ -106,6 +106,7 @@ alias intd0="0 && intdc" # Tindac with clear screen
 alias intdc='e "Cleanup:" && d0o; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
 alias intd="(pcd infinito && m test-local-full)"
 alias intro="l intd" # deploy ohne cleanup
+alias lint='ru; cs' # Lint and fix all code
 alias l='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; __tlog' # l <alias|cmd> [logfile]
 alias mi='m install'
 alias m='make'
