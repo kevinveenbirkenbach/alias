@@ -129,6 +129,8 @@ alias prp='pr patch'
 alias pr='p release'
 alias psa='p status --all ' # Show status off all repos
 alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruff
+alias shj='shrt 100000 /home/kevinveenbirkenbach/Downloads/job-logs.txt' # shortcut for your job log file: shj  (shrinks to 100000 lines)
+alias shrt='__shrt(){ local n="$1"; local f="$2"; tail -n "$n" -- "$f" > "${f}.tmp" && mv -- "${f}.tmp" "$f"; }; __shrt' # shrink file to last N lines: shrt <lines> <file>
 alias ssha='ssh alphaserver'
 alias sshe='ssh echoserver'
 alias sshg='ssh galaxyserver'
