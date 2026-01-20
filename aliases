@@ -62,7 +62,7 @@ alias enter='__enter(){ printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$1"; re
 alias gi0="gioc . && gioh . && gio0 && girec && gis" # Reset head and checkout all
 alias giaa='gia --all' # git add --all
 alias gia="gi add"
-alias giao='giax && giup' # git add --all
+alias giao='lint; giax && giup' # git add --all, push update and lint
 alias giau="giaa && gicoa && gipu" # git add --all, commit and push
 alias giax='giaa && gido'
 alias giclo='gi clone' # Executes 'git clone'
@@ -114,6 +114,7 @@ alias mi='m install'
 alias m='make'
 alias n='__n(){ nohup nautilus "${1:-$PWD}" >/dev/null 2>&1 & disown; }; __n' # Executes nautilus to explore the (current) directory
 alias o="ao; co"
+alias pa='p pull alias' # pull alliases
 alias pc2i='pc computer-inventory' # change to computer-inventory
 alias pcdci='pcd computer-inventory' # changes to computer-inventory folder
 alias pcd='__pcd(){ cd "$(pp "$1")"; }; __pcd' # Change directory to packagemanager package
@@ -130,6 +131,7 @@ alias prmi='pr minor'
 alias prp='pr patch'
 alias pr='p release'
 alias psa='p status --all ' # Show status off all repos
+alias pu='p push alias' # push aliases
 alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruff
 alias shjo='__shjo(){ f="$(alf)"; if [ -n "${ZSH_VERSION-}" ]; then read -r "u?URL to download: "; else read -rp "URL to download: " u; fi; [ -n "$u" ] && curl -fL "$u" -o "$f" && shj "$f"; }; __shjo' # download URL to job-txt-(zulu).log and shrink it
 alias shj='__shj(){ shrt 100000 "${1:-$(ls -t $(ald)/*.log 2>/dev/null | head -n1)}"; }; __shj' # shrink newest *.log (or given file) to 100000 lines
