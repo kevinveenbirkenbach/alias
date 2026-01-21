@@ -32,7 +32,7 @@ alias azd='__azd(){ umask 077; mkdir -p -- "$(atmp)/zip"; printf "%s" "$(atmp)/z
 alias azf='__azf(){ printf "%s" "$(azd)/$(zulu).zip"; }; __azf' # default zip file path
 alias bsra='__bsra(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; __bsra' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
-alias checkshell='shellcheck -x $(find . -type f -name '"'"'*.sh'"'"' -print)' # Starts shellcheck
+alias checkshell='if find . -type f -name "*.sh" | grep -q .; then find . -type f -name "*.sh" -print0 | xargs -0 shellcheck -x; else echo "⚠️  No .sh files found – nothing to check."; true; fi' # Starts shellcheck
 alias coad='__coad(){ chezmoi add "${1}"}; __coad' # Add new file to chezmoi
 alias coap="chezmoi apply"
 alias co="echo 'Alpha & Omega Config' && (copu;cosy)"
@@ -67,7 +67,7 @@ alias giau="giaa && gicoa && gipu" # git add --all, commit and push
 alias giax='giaa && gido'
 alias giclo='gi clone' # Executes 'git clone'
 alias gicoa='__gicoa(){ gico -m "automatic commit by $(giuser) - $(zulu)"; }; __gicoa'
-alias gico="gi commit"
+alias gico='gi commit'
 alias gidic='__gidic(){ gidi "$1"..HEAD | tee >(xc >/dev/null) | less; }; __gidic' # All changes accumulated since commit
 alias gidi="gi diff"
 alias gidil='gidic $(gilata)' # Changes since last tag
