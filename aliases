@@ -95,6 +95,8 @@ alias gist='gist apply' # Git stash apply
 alias giup="gico && gipu"
 alias giuser='gi config user.name'
 alias gizo='gido && gico && gipu' # show diff, xcopy and commit push
+alias inacta='__inacta(){ l "pcd infinito && m test-act-all"; }; __inacta'
+alias inacts='__inacts(){ l "pcd infinito && APP=\"${1}\" m test-act-app"; }; __inacts'
 alias ina='d exec -it infinito_nexus_arch sh' # sh into default infinito container
 alias inax='arcx .github/workflows/test-deploy-server.yml Makefile Dockerfile scripts/tests scripts/meta cli/deploy/development cli/create/inventory/ docker-compose.yml compose/'
 alias inda='__inda(){ l "pcd infinito && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-deploy-app"; }; __inda' # Default test deploy of app
