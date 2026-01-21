@@ -32,7 +32,7 @@ alias azd='__azd(){ umask 077; mkdir -p -- "$(atmp)/zip"; printf "%s" "$(atmp)/z
 alias azf='__azf(){ printf "%s" "$(azd)/$(zulu).zip"; }; __azf' # default zip file path
 alias bsra='__bsra(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; __bsra' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
-alias checkshell='shellcheck -x $(find scripts -type f -name '"'"'*.sh'"'"' -print)' # Starts shellcheck
+alias checkshell='shellcheck -x $(find . -type f -name '"'"'*.sh'"'"' -print)' # Starts shellcheck
 alias coad='__coad(){ chezmoi add "${1}"}; __coad' # Add new file to chezmoi
 alias coap="chezmoi apply"
 alias co="echo 'Alpha & Omega Config' && (copu;cosy)"
