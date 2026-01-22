@@ -135,6 +135,7 @@ alias prp='pr patch'
 alias pr='p release'
 alias psa='p status --all ' # Show status off all repos
 alias pu='p push alias' # push aliases
+alias rgtxt='__rgtxt(){ q="$1"; d="$(dp "$(atmp)/files")"; f="$d/$(zulu).txt"; rg -l -0 "$q" | xargs -0 awk '\''FNR==1{print "\n===== FILE: " FILENAME " =====\n"}{print}'\'' > "$f"; printf "%s\n" "$f"; }; __rgtxt'
 alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruff
 alias shjo='__shjo(){ f="$(alf)"; if [ -n "${ZSH_VERSION-}" ]; then read -r "u?URL to download: "; else read -rp "URL to download: " u; fi; [ -n "$u" ] && curl -fL "$u" -o "$f" && shj "$f"; }; __shjo' # download URL to job-txt-(zulu).log and shrink it
 alias shj='__shj(){ shrt 100000 "${1:-$(ls -t $(ald)/*.log 2>/dev/null | head -n1)}"; }; __shj' # shrink newest *.log (or given file) to 100000 lines
