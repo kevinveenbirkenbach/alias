@@ -58,7 +58,7 @@ alias drun='docker run --rm' #Runs image
 alias dstopa='d stop $(docker ps -aq) 2>/dev/null' # Stopps all docker containers
 alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker related on the system
 alias e='echo' # echo
-alias enter='__enter(){ printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$1"; read -r _; }; __enter' # confirm overwrite
+alias enter='__enter(){ read -r _; }; __enter' # confirm overwrite
 alias gi0="gioc . && gioh . && gio0 && girec && gis" # Reset head and checkout all
 alias giaa='gia --all' # git add --all
 alias gia="gi add"
@@ -76,7 +76,7 @@ alias gidis='gidi --staged'
 alias gidiv='gil "$(git describe --tags --abbrev=0)"..HEAD'
 alias gidivo='xs gidiv'
 alias gidix='xs gidic' # diffs to this comment into clipboard
-alias gido='(gidis | xc) && gidis'
+alias gido='gis && enter && (gidis | xc) && gidis'
 alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
@@ -149,6 +149,6 @@ alias t='p terminal'
 alias tunit='m test-unit' # make test-unit
 alias xc='xclip -selection clipboard'
 alias xs='__xs(){ eval "$*" | tee >(xc >/dev/null) | less -R; }; __xs' # Show unformated
-alias zc='__zc(){ local z="${1:-$(azf)}"; if [ -e "$z" ]; then printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$z"; read -r _; fi; rm -f -- "$z"; zip -vr "$z" *; }; __zc' # zip cwd (no dotfiles)
+alias zc='__zc(){ local z="${1:-$(azf)}"; if [ -e "$z" ]; then printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$z"; enter; fi; rm -f -- "$z"; zip -vr "$z" *; }; __zc' # zip cwd (no dotfiles)
 alias zulu='date -u +%Y%m%dT%H%M%SZ' # ISO-8601 basic, UTC, Zulu
 alias z="zip"
