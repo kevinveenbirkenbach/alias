@@ -51,6 +51,7 @@ alias dc='d compose'
 alias d='docker'
 alias de='__de(){ docker exec -it $1 sh; }; __de'
 alias doa='sudo systemctl start docker' # Start docker service
+alias doro="dor && nmr" # full restart of docker incl. network manager to prevent flaky and spooky behaviour of TLLS connections
 alias dor='sudo systemctl restart docker' # Restart docker service
 alias dp='__dp(){ umask 077; mkdir -p -- "$1"; printf "%s" "$1"; }; __dp' # create protected dir (0700), echo path
 alias dpsa='dps -a'
@@ -117,6 +118,7 @@ alias lint='ru; cs' # Lint and fix all code
 alias l='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; __tlog' # l <alias|cmd> [logfile]
 alias mi='m install'
 alias m='make'
+alias nmr='sudo systemctl restart NetworkManager' # network manager restart
 alias n='__n(){ nohup nautilus "${1:-$PWD}" >/dev/null 2>&1 & disown; }; __n' # Executes nautilus to explore the (current) directory
 alias o="ao; co"
 alias pc2i='pc computer-inventory' # change to computer-inventory
