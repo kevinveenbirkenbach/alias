@@ -118,6 +118,7 @@ alias intd="(pcd infinito && m test-local-full)"
 alias int="(pcd infinito && tunit && tint && lint)" # full code tests
 alias intro="l intd" # deploy ohne cleanup
 alias lint='ru; cs' # Lint and fix all code
+alias lrange='__lrange(){ awk -v f="$1" -v t="$2" '\''$0~f{p=1}p;$0~t{p=0}'\'' "$3"; }; __lrange' # Filter log https://chatgpt.com/share/69761151-6910-800f-8f2a-17ea32308f75
 alias l='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; __tlog' # l <alias|cmd> [logfile]
 alias mi='m install'
 alias m='make'
