@@ -110,12 +110,14 @@ alias inlofo='d0o; doro && d0o; && inlofu' # Full fresh deploy of Infinito incl.
 alias inlofu='__inlofu(){ l "pci && m test-local-full"; }; __inlofu' # Full deploy
 alias inlora='__inra(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-local-rapid"; }; __inra' # Rapid test deploy
 alias inlore='__inlore(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-local-rapid-fresh"; }; __inlore' # Rapid test fresh redeploy
+alias ino='doro && inu' # Restart full infinito stack
 alias insuc='m clean-sudo' # Sudo Clean Up
 alias intd0="0 && intdc" # Tindac with clear screen
 alias intdc='e "Cleanup:" && d0o; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
 alias intd="(pci && m test-local-full)"
 alias int="(pci && tunit && tint && lint)" # full code tests
 alias intro="l intd" # deploy ohne cleanup
+alias inu='(pci && m docker-up)' # docker compose up for infinito
 alias lint='ru; cs' # Lint and fix all code
 alias lrange='__lrange(){ awk -v f="$1" -v t="$2" '\''$0~f{p=1}p;$0~t{p=0}'\'' "$3"; }; __lrange' # Filter log https://chatgpt.com/share/69761151-6910-800f-8f2a-17ea32308f75
 alias l='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; __tlog' # l <alias|cmd> [logfile]
