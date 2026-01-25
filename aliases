@@ -125,6 +125,7 @@ alias m='make'
 alias nmr='sudo systemctl restart NetworkManager' # network manager restart
 alias n='__n(){ nohup nautilus "${1:-$PWD}" >/dev/null 2>&1 & disown; }; __n' # Executes nautilus to explore the (current) directory
 alias o="ao; co"
+alias pa='p pull alias' # pull alliases
 alias pc2i='pc computer-inventory' # change to computer-inventory
 alias pcdci='pcd computer-inventory' # changes to computer-inventory folder
 alias pcd='__pcd(){ cd "$(pp "$1")"; }; __pcd' # Change directory to packagemanager package
@@ -134,7 +135,7 @@ alias pc='p code' # Opens pkgmgr code
 alias pe='p explore' # Opens GNOME for pkgmgr package
 alias pmp='p mirror provision' # Provision mirrors via pkgmgr
 alias pms='p mirror setup' # Setup mirrors local
-alias po='p pull alias' # pull alliases
+alias po='p push alias' # push aliases
 alias p='pkgmgr' # Executes pkgmgr
 alias pp='p path' # Package manager path
 alias prma='pr major'
@@ -142,7 +143,6 @@ alias prmi='pr minor'
 alias prp='pr patch'
 alias pr='p release'
 alias psa='p status --all ' # Show status off all repos
-alias pu='p push alias' # push aliases
 alias rgtxt='__rgtxt(){ q="$1"; d="$(dp "$(atmp)/files")"; f="$d/$(zulu).txt"; rg -l -0 "$q" | xargs -0 awk '\''FNR==1{print "\n===== FILE: " FILENAME " =====\n"}{print}'\'' > "$f"; printf "%s\n" "$f"; }; __rgtxt'
 alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruff
 alias shjo='__shjo(){ f="$(alf)"; if [ -n "${ZSH_VERSION-}" ]; then read -r "u?URL to download: "; else read -rp "URL to download: " u; fi; [ -n "$u" ] && curl -fL "$u" -o "$f" && shj "$f"; }; __shjo' # download URL to job-txt-(zulu).log and shrink it
