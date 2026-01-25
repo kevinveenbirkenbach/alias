@@ -1,21 +1,20 @@
 
 alias 0='clear' # clear screen
-alias a='acd && m' # Call alias 'make'
-alias acd='pcd alias' # Change to alias repo directory
 alias ac='pc alias' # Edit aliases
-alias ada='(acd && giau)' # add, commit, and push alias
+alias ada='(pca && giau)' # add, commit, and push alias
 alias aedit='nano "$(afile)"' # Edit aliases file
 alias aeditu='aedit && aus'
 alias aexport='__aexport(){ (a export a="$1";) }; __aexport'
-alias afact='(acd && m refactor)' # Refactors aliases
+alias afact='(pca && m refactor)' # Refactors aliases
 alias afile='e "$(apath)/aliases"'
 alias ald='dp "$(atmp)/log"' # log dir
 alias alf='e "$(ald)/$(zulu).log"' # default log file path
 alias alist="(a list)"
 alias anewa='anew && ada' # Autopublishing of command
-alias anew='(acd && m add && aus)' # Add new alias
+alias anew='(pca && m add && aus)' # Add new alias
 alias ao='aus && ada' # update, add, commit, and push alias (Alpha and Omega ;) )
 alias apath='p path alias'
+alias a='pca && m' # Call alias 'make'
 alias arc2='__arc2(){ rg -F -l -0 "$1" | xargs -0 arc -qx --; }; __arc2' # arcx with string
 alias arce='__arce(){ rg -l -0 "$1" | xargs -0 arc -qx --; }; __arce' # arcx with regex
 alias arci='arc -qxI *.md LICENSE --' # Copys all files into clippboard except .md
@@ -98,24 +97,24 @@ alias gist='gist apply' # Git stash apply
 alias giup="gico && gipo"
 alias giuser='gi config user.name'
 alias gizo='gido && gico && gipo' # show diff, xcopy and commit push
-alias inacta='__inacta(){ l "pcd infinito && m test-act-all"; }; __inacta'
-alias inacts='__inacts(){ l "pcd infinito && APP=\"${1}\" m test-act-app"; }; __inacts'
+alias inacta='__inacta(){ l "pci && m test-act-all"; }; __inacta'
+alias inacts='__inacts(){ l "pci && APP=\"${1}\" m test-act-app"; }; __inacts'
 alias ina='d exec -it infinito_nexus_arch sh' # sh into default infinito container
 alias inax='arcx .github/workflows/test-deploy-server.yml Makefile Dockerfile scripts/tests scripts/meta cli/deploy/development cli/create/inventory/ docker-compose.yml compose/'
-alias inda='__inda(){ l "pcd infinito && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-deploy-app"; }; __inda' # Default test deploy of app
+alias inda='__inda(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-deploy-app"; }; __inda' # Default test deploy of app
 alias indepo='__indepo(){ local host="$1"; shift; infinito deploy dedicated ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/servers.yml --limit "$host" --password-file ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/.pass/"$host".txt "$@"; }; __indepo'
 alias indo="l intd0" # Test infinito deploy and log (Omega command)
-alias inir='(pcd infinito && m test-local-reset)' # Reset infinito inventory
-alias inlofa='__inlofa(){ l "pcd infinito && m test-local-run-all"; }; __inlofa' # Rerun deploy fopr all apps
+alias inir='(pci && m test-local-reset)' # Reset infinito inventory
+alias inlofa='__inlofa(){ l "pci && m test-local-run-all"; }; __inlofa' # Rerun deploy fopr all apps
 alias inlofo='d0o; doro && d0o; && inlofu' # Full fresh deploy of Infinito incl. volume delete, network and docker systemctl restart and fresh and full infinito.nexus test deploy
-alias inlofu='__inlofu(){ l "pcd infinito && m test-local-full"; }; __inlofu' # Full deploy
-alias inlora='__inra(){ l "pcd infinito && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-local-rapid"; }; __inra' # Rapid test deploy
-alias inlore='__inlore(){ l "pcd infinito && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-local-rapid-fresh"; }; __inlore' # Rapid test fresh redeploy
+alias inlofu='__inlofu(){ l "pci && m test-local-full"; }; __inlofu' # Full deploy
+alias inlora='__inra(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-local-rapid"; }; __inra' # Rapid test deploy
+alias inlore='__inlore(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-local-rapid-fresh"; }; __inlore' # Rapid test fresh redeploy
 alias insuc='m clean-sudo' # Sudo Clean Up
 alias intd0="0 && intdc" # Tindac with clear screen
 alias intdc='e "Cleanup:" && d0o; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
-alias intd="(pcd infinito && m test-local-full)"
-alias int="(pcd infinito && tunit && tint && lint)" # full code tests
+alias intd="(pci && m test-local-full)"
+alias int="(pci && tunit && tint && lint)" # full code tests
 alias intro="l intd" # deploy ohne cleanup
 alias lint='ru; cs' # Lint and fix all code
 alias lrange='__lrange(){ awk -v f="$1" -v t="$2" '\''$0~f{p=1}p;$0~t{p=0}'\'' "$3"; }; __lrange' # Filter log https://chatgpt.com/share/69761151-6910-800f-8f2a-17ea32308f75
@@ -127,6 +126,7 @@ alias n='__n(){ nohup nautilus "${1:-$PWD}" >/dev/null 2>&1 & disown; }; __n' # 
 alias o="ao; co"
 alias pa='p pull alias' # pull alliases
 alias pc2i='pc computer-inventory' # change to computer-inventory
+alias pca='pcd alias' # Change to alias repo directory
 alias pcdci='pcd computer-inventory' # changes to computer-inventory folder
 alias pcd='__pcd(){ cd "$(pp "$1")"; }; __pcd' # Change directory to packagemanager package
 alias pci='pcd infinito'
