@@ -112,6 +112,7 @@ alias inlora='__inra(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m te
 alias inlore='__inlore(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-local-rapid-fresh"; }; __inlore' # Rapid test fresh redeploy
 alias ino='doro && inu' # Restart full infinito stack
 alias insuc='m clean-sudo' # Sudo Clean Up
+alias intcy='__intcy(){ (pci && mkdir -p "roles/$1/tests/cypress" && cd "roles/$1/tests/cypress" && npm init -y && npm install --save-dev cypress && npx cypress open); }; __intcy'
 alias intd0="0 && intdc" # Tindac with clear screen
 alias intdc='e "Cleanup:" && d0o; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
 alias intd="(pci && m test-local-full)"
