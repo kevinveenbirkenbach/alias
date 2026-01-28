@@ -61,7 +61,7 @@ alias dstopa='d stop $(docker ps -aq) 2>/dev/null' # Stopps all docker container
 alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker related on the system
 alias e='echo' # echo
 alias enter='__enter(){ read -r _; }; __enter' # confirm overwrite
-alias gi0="gioc . && gioh . && gio0 && girec && gis" # Reset head and checkout all
+alias gi0="gioc . && gir . && gio0 && girec && gis" # Reset head and checkout all
 alias giaa='gia --all' # git add --all
 alias gia="gi add"
 alias giao='lint; giax && giup' # git add --all, push update and lint
@@ -84,12 +84,12 @@ alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
 alias gio0='gi clean -fdX .' # Executes 'git clean -fdX .' and deletes all untracked files
 alias gioc='gi checkout' # Executes 'git checkout'
-alias gioh='gi reset HEAD' # Resets git head
 alias gipa="gi pull"
 alias gipo="gi push"
 alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
-alias gir='gioh . && gis' # git reset head all
+alias gir='gi reset HEAD' # Resets git head
+alias giro='gir --all && gis' # git reset head all
 alias gis='gi status' # Git status
 alias gisl='git diff --cached --name-only --diff-filter=ACMR | paste -sd" " -' # All staged files, except deleted
 alias gista='gi stash' # Git stash
@@ -108,8 +108,8 @@ alias inir='(pci && m test-local-reset)' # Reset infinito inventory
 alias inlofa='__inlofa(){ l "pci && m test-local-run-all"; }; __inlofa' # Rerun deploy fopr all apps
 alias inlofo='d0o; doro && d0o; && inlofu' # Full fresh deploy of Infinito incl. volume delete, network and docker systemctl restart and fresh and full infinito.nexus test deploy
 alias inlofu='__inlofu(){ l "pci && m test-local-full"; }; __inlofu' # Full deploy
-alias inlora='__inra(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-local-rapid"; }; __inra' # Rapid test deploy
-alias inlore='__inlore(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-local-rapid-fresh"; }; __inlore' # Rapid test fresh redeploy
+alias inlora='__inra(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" APP=\"${2}\" m test-local-rapid"; }; __inra' # Rapid test deploy
+alias inlore='__inlore(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" APP=\"${2}\" m test-local-rapid-fresh"; }; __inlore' # Rapid test fresh redeploy
 alias ino='doro && inu' # Restart full infinito stack
 alias insuc='m clean-sudo' # Sudo Clean Up
 alias intcy='__intcy(){ (pci && mkdir -p "roles/$1/tests/cypress" && cd "roles/$1/tests/cypress" && npm init -y && npm install --save-dev cypress && npx cypress open); }; __intcy'
