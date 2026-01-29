@@ -110,6 +110,7 @@ alias inlofo='d0o; doro && d0o; && inlofu' # Full fresh deploy of Infinito incl.
 alias inlofu='__inlofu(){ l "pci && m test-local-full"; }; __inlofu' # Full deploy
 alias inlora='__inra(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" APP=\"${2}\" m test-local-rapid"; }; __inra' # Rapid test deploy
 alias inlore='__inlore(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" APP=\"${2}\" m test-local-rapid-fresh"; }; __inlore' # Rapid test fresh redeploy
+alias inlowu='__inlowu(){ l "pci && m test-local-web-purge && m test-local-full"; }; __inlowu' # Full deploy with fresh web files
 alias ino='doro && inu' # Restart full infinito stack
 alias insuc='m clean-sudo' # Sudo Clean Up
 alias intcy='__intcy(){ (pci && mkdir -p "roles/$1/tests/cypress" && cd "roles/$1/tests/cypress" && npm init -y && npm install --save-dev cypress && npx cypress open); }; __intcy'
