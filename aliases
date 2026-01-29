@@ -89,7 +89,7 @@ alias gipo="gi push"
 alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
 alias gir='gi reset HEAD' # Resets git head
-alias giro='gir --all && gis' # git reset head all
+alias giro='gir; gioc .; gis' # git reset head all
 alias gis='gi status' # Git status
 alias gisl='git diff --cached --name-only --diff-filter=ACMR | paste -sd" " -' # All staged files, except deleted
 alias gista='gi stash' # Git stash
