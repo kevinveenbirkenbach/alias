@@ -106,7 +106,7 @@ alias indepo='__indepo(){ local host="$1"; shift; infinito deploy dedicated ~/Re
 alias indo="l intd0" # Test infinito deploy and log (Omega command)
 alias inir='(pci && m test-local-reset)' # Reset infinito inventory
 alias inlofa='__inlofa(){ l "pci && m test-local-run-all"; }; __inlofa' # Rerun deploy fopr all apps
-alias inlofo='d0o; doro && d0o; && inlofu' # Full fresh deploy of Infinito incl. volume delete, network and docker systemctl restart and fresh and full infinito.nexus test deploy
+alias inlofo='d0o; doro && d0o; inlofu' # Full fresh deploy of Infinito incl. volume delete, network and docker systemctl restart and fresh and full infinito.nexus test deploy
 alias inlofu='__inlofu(){ l "pci && m test-local-full"; }; __inlofu' # Full deploy
 alias inlora='__inra(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" APP=\"${2}\" m test-local-rapid"; }; __inra' # Rapid test deploy
 alias inlore='__inlore(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" APP=\"${2}\" m test-local-rapid-fresh"; }; __inlore' # Rapid test fresh redeploy
