@@ -83,8 +83,9 @@ alias gido='gis && (gidis | xc) && gidis'
 alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
+alias gim='gioc master' # Checkout to master
 alias gio0='gi clean -fdX .' # Executes 'git clean -fdX .' and deletes all untracked files
-alias gioc='gi checkout' # Executes 'git checkout'
+alias giob='gi checkout' # Executes 'git checkout'
 alias gipa="gi pull"
 alias gipo="gi push"
 alias girec="gire ." # Git restore current folder
