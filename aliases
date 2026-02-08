@@ -62,8 +62,8 @@ alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker r
 alias e='echo' # echo
 alias enter='__enter(){ read -r _; }; __enter' # confirm overwrite
 alias gha0='gh run list --branch "$(git rev-parse --abbrev-ref HEAD)" --status in_progress --json databaseId -q ".[].databaseId" | xargs -r -n1 gh run cancel; gh run list --branch "$(git rev-parse --abbrev-ref HEAD)" --status queued --json databaseId -q ".[].databaseId" | xargs -r -n1 gh run cancel' # Cancel all in_progress and queued GitHub Actions runs for current branch
-alias ghm0='__ghm0(){ local br="${1:?usage: ghm0 <branch>}"; giob "$br" && lint && int && gha0 && gim && gime "$br" && yes | p branch drop "$br"; }; __ghm0'
-alias gi0="gioc . && gir . && gio0 && girec && gis" # Reset head and checkout all
+alias ghm0='(){ ( br="${1:?usage: ghm0 <branch>}"; giob "$br" || exit 1; lint || exit 1; int || exit 1; gha0 || exit 1; gim || exit 1; gipo || exit 1; gime "$br" || exit 1; yes | p branch drop "$br" || exit 1 ) }'
+alias gi0="giob . && gir . && gio0 && girec && gis" # Reset head and checkout all
 alias giaa='gia --all' # git add --all
 alias gia="gi add"
 alias giao='lint; giax && giup' # git add --all, push update and lint
@@ -85,7 +85,7 @@ alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
 alias gime='gi merge' # git merge
-alias gim='gioc master' # Checkout to master
+alias gim='giob master' # Checkout to master
 alias gio0='gi clean -fdX .' # Executes 'git clean -fdX .' and deletes all untracked files
 alias giob='gi checkout' # Executes 'git checkout'
 alias gipa="gi pull"
@@ -93,7 +93,7 @@ alias gipo="gi push"
 alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
 alias gir='gi reset HEAD' # Resets git head
-alias giro='gir; gioc .; gis' # git reset head all
+alias giro='gir; giob .; gis' # git reset head all
 alias gis='gi status' # Git status
 alias gisl='git diff --cached --name-only --diff-filter=ACMR | paste -sd" " -' # All staged files, except deleted
 alias gista='gi stash' # Git stash
