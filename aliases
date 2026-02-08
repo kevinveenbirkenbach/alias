@@ -61,6 +61,7 @@ alias dstopa='d stop $(docker ps -aq) 2>/dev/null' # Stopps all docker container
 alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker related on the system
 alias e='echo' # echo
 alias enter='__enter(){ read -r _; }; __enter' # confirm overwrite
+alias gha0='gh run list --branch "$(git rev-parse --abbrev-ref HEAD)" --status in_progress --json databaseId -q ".[].databaseId" | xargs -r gh run cancel; gh run list --branch "$(git rev-parse --abbrev-ref HEAD)" --status queued --json databaseId -q ".[].databaseId" | xargs -r gh run cancel' # Cancel all in_progress and queued GitHub Actions runs for current branch
 alias gi0="gioc . && gir . && gio0 && girec && gis" # Reset head and checkout all
 alias giaa='gia --all' # git add --all
 alias gia="gi add"
