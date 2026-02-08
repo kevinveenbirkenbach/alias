@@ -62,6 +62,7 @@ alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker r
 alias e='echo' # echo
 alias enter='__enter(){ read -r _; }; __enter' # confirm overwrite
 alias gha0='gh run list --branch "$(git rev-parse --abbrev-ref HEAD)" --status in_progress --json databaseId -q ".[].databaseId" | xargs -r -n1 gh run cancel; gh run list --branch "$(git rev-parse --abbrev-ref HEAD)" --status queued --json databaseId -q ".[].databaseId" | xargs -r -n1 gh run cancel' # Cancel all in_progress and queued GitHub Actions runs for current branch
+alias ghm0='__ghm0(){ local br="${1:?usage: ghm0 <branch>}"; giob "$br" && lint && int && gha0 && gim && gime "$br" && yes | p branch drop "$br"; }; __ghm0'
 alias gi0="gioc . && gir . && gio0 && girec && gis" # Reset head and checkout all
 alias giaa='gia --all' # git add --all
 alias gia="gi add"
@@ -83,6 +84,7 @@ alias gido='gis && (gidis | xc) && gidis'
 alias gi="git"
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
+alias gime='gi merge' # git merge
 alias gim='gioc master' # Checkout to master
 alias gio0='gi clean -fdX .' # Executes 'git clean -fdX .' and deletes all untracked files
 alias giob='gi checkout' # Executes 'git checkout'
