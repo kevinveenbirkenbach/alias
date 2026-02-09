@@ -49,6 +49,7 @@ alias dc0o='dc0 -v'
 alias dc='d compose'
 alias d='docker'
 alias de='__de(){ docker exec -it $1 sh; }; __de'
+alias disip6="sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1" # Disable IPv6
 alias doa='sudo systemctl start docker' # Start docker service
 alias doro="dor && nmr" # full restart of docker incl. network manager to prevent flaky and spooky behaviour of TLLS connections
 alias dor='sudo systemctl restart docker' # Restart docker service
