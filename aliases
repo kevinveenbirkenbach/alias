@@ -135,6 +135,7 @@ alias nmr='sudo systemctl restart NetworkManager' # network manager restart
 alias n='__n(){ nohup nautilus "${1:-$PWD}" >/dev/null 2>&1 & disown; }; __n' # Executes nautilus to explore the (current) directory
 alias o="ao; co"
 alias pa='p pull alias' # pull alliases
+alias pbd='p branch drop'
 alias pbo='p branch open' # Open new branch
 alias pc2i='pc computer-inventory' # change to computer-inventory
 alias pca='pcd alias' # Change to alias repo directory
