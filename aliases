@@ -104,6 +104,7 @@ alias giuser='gi config user.name'
 alias gizo='gido && gico && gipo' # show diff, xcopy and commit push
 alias inacta='__inacta(){ l "pci && m test-act-all"; }; __inacta'
 alias inacts='__inacts(){ l "pci && APP=\"${1}\" m test-act-app"; }; __inacts'
+alias inade='d exec -it infinito_nexus_debian sh'
 alias ina='d exec -it infinito_nexus_arch sh' # sh into default infinito container
 alias inax='arcx .github/workflows/test-deploy-server.yml Makefile Dockerfile scripts/tests scripts/meta cli/deploy/development cli/create/inventory/ docker-compose.yml compose/'
 alias inda='__inda(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-deploy-app"; }; __inda' # Default test deploy of app
