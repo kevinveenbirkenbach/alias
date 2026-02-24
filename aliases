@@ -62,6 +62,10 @@ alias dstopa='d stop $(docker ps -aq) 2>/dev/null' # Stopps all docker container
 alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker related on the system
 alias e='echo' # echo
 alias enter='__enter(){ read -r _; }; __enter' # confirm overwrite
+alias fido='__fido(){ d="$(ald)"; f="$d/$(zulu).log"; if [ -n "${ZSH_VERSION-}" ]; then read -r "u?URL to download: "; else read -rp "URL to download: " u; fi; [ -n "$u" ] && curl -fL "$u" -o "$f" && printf "%s\n" "$f"; }; __fido'
+alias fidos='__fidos(){ f="$(alf)"; if [ -n "${ZSH_VERSION-}" ]; then read -r "u?URL to download: "; else read -rp "URL to download: " u; fi; [ -n "$u" ] && curl -fL "$u" -o "$f" && finest "$f"; }; __fidos' # download URL to job-txt-(zulu).log and shrink it
+alias finest='__finest(){ fist 100000 "${1:-$(ls -t $(ald)/*.log 2>/dev/null | head -n1)}"; }; __finest' # shrink newest *.log (or given file) to 100000 lines
+alias fist='__fist(){ local n="$1"; local f="$2"; tail -n "$n" -- "$f" > "${f}.tmp" && mv -- "${f}.tmp" "$f"; }; __fist' # shrink file to last N lines: fist <lines> <file>
 alias gha0='gh run list --branch "$(git rev-parse --abbrev-ref HEAD)" --status in_progress --json databaseId -q ".[].databaseId" | xargs -r -n1 gh run cancel; gh run list --branch "$(git rev-parse --abbrev-ref HEAD)" --status queued --json databaseId -q ".[].databaseId" | xargs -r -n1 gh run cancel' # Cancel all in_progress and queued GitHub Actions runs for current branch
 alias ghm0='(){ ( br="${1:?usage: ghm0 <branch>}"; giob "$br" || exit 1; lint || exit 1; int || exit 1; gha0 || exit 1; gim || exit 1; gipo || exit 1; gime "$br" || exit 1; yes | p branch drop "$br" || exit 1 ) }'
 alias gi0="giob . && gir . && gio0 && girec && gis" # Reset head and checkout all
@@ -160,9 +164,6 @@ alias pt='p terminal'
 alias rgtxt='__rgtxt(){ q="$1"; d="$(dp "$(atmp)/files")"; f="$d/$(zulu).txt"; rg -l -0 "$q" | xargs -0 awk '\''FNR==1{print "\n===== FILE: " FILENAME " =====\n"}{print}'\'' > "$f"; printf "%s\n" "$f"; }; __rgtxt'
 alias ring='paplay /usr/share/sounds/freedesktop/stereo/complete.oga'
 alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruff
-alias shjo='__shjo(){ f="$(alf)"; if [ -n "${ZSH_VERSION-}" ]; then read -r "u?URL to download: "; else read -rp "URL to download: " u; fi; [ -n "$u" ] && curl -fL "$u" -o "$f" && shj "$f"; }; __shjo' # download URL to job-txt-(zulu).log and shrink it
-alias shj='__shj(){ shrt 100000 "${1:-$(ls -t $(ald)/*.log 2>/dev/null | head -n1)}"; }; __shj' # shrink newest *.log (or given file) to 100000 lines
-alias shrt='__shrt(){ local n="$1"; local f="$2"; tail -n "$n" -- "$f" > "${f}.tmp" && mv -- "${f}.tmp" "$f"; }; __shrt' # shrink file to last N lines: shrt <lines> <file>
 alias ssha='ssh alphaserver'
 alias sshe='ssh echoserver'
 alias sshg='ssh galaxyserver'
