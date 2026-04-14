@@ -33,6 +33,7 @@ alias azf='__azf(){ printf "%s" "$(azd)/$(zulu).zip"; }; __azf' # default zip fi
 alias bsra='__bsra(){ command bsr -fPrcvn "$3" "$1" -- "$2"; }; __bsra' # Executes bulk string replace: $1=search dir, $2=search string, $3=replace string
 alias c='code' # Execute code
 alias checkshell='if find . -type f -name "*.sh" | grep -q .; then find . -type f -name "*.sh" -print0 | xargs -0 shellcheck -x; else echo "⚠️  No .sh files found – nothing to check."; true; fi' # Starts shellcheck
+alias cherry="gi cherry-pick" #git cherry-pick
 alias coad='__coad(){ chezmoi add "${1}"}; __coad' # Add new file to chezmoi
 alias coap="chezmoi apply"
 alias co="echo 'Alpha & Omega Config' && (copu;cosy)"
