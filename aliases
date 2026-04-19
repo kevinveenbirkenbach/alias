@@ -75,6 +75,7 @@ alias gia="gi add"
 alias giao='lint; giax && giup' # git add --all, push update and lint
 alias giau="giaa && gicoa && gipo" # git add --all, commit and push
 alias giax='giaa && gido'
+alias gibr='gi rev-parse --abbrev-ref HEAD' # Current git branch name
 alias giclo='gi clone' # Executes 'git clone'
 alias gicoa='__gicoa(){ gico -m "automatic commit by $(giuser) - $(zulu)"; }; __gicoa'
 alias gico='gi commit'
@@ -88,7 +89,6 @@ alias gidivo='xs gidiv'
 alias gidix='xs gidic' # diffs to this comment into clipboard
 alias gido='gis && (gidis | xc) && gidis'
 alias gi="git"
-alias gibr='gi rev-parse --abbrev-ref HEAD' # Current git branch name
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
 alias gime='gi merge' # git merge
