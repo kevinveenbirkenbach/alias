@@ -88,16 +88,19 @@ alias gidivo='xs gidiv'
 alias gidix='xs gidic' # diffs to this comment into clipboard
 alias gido='gis && (gidis | xc) && gidis'
 alias gi="git"
+alias gibr='gi rev-parse --abbrev-ref HEAD' # Current git branch name
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
 alias gime='gi merge' # git merge
 alias gim='giob master' # Checkout to master
 alias gio0='gi clean -fdX .' # Executes 'git clean -fdX .' and deletes all untracked files
 alias giob='gi checkout' # Executes 'git checkout'
-alias gip2='gipo && git push upstream HEAD'
+alias gip2='gipa2 && gips && gipu' # Pull current branch from origin+upstream, sign-push, then push current branch to upstream
+alias gipa2='br=$(gibr) && gipa origin "$br" && gipa upstream "$br"' # Pull current branch from origin and upstream
 alias gipa="gi pull"
 alias gipo="gi push"
-alias gipu='git push upstream HEAD'
+alias gips='make sign-push'
+alias gipu='git push upstream HEAD' # Push current branch to upstream (same-named remote branch)
 alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
 alias gir='gi reset HEAD' # Resets git head
