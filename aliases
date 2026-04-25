@@ -99,7 +99,7 @@ alias gip2='gipa2 && gips && gipu' # Pull current branch from origin+upstream, s
 alias gipa2='br=$(gibr) && gipa origin "$br" && gipa upstream "$br"' # Pull current branch from origin and upstream
 alias gipa="gi pull"
 alias gipo="gi push"
-alias gips='m git-sign-push'
+alias gips='git-sign-push'
 alias gipu='git push upstream HEAD' # Push current branch to upstream (same-named remote branch)
 alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
