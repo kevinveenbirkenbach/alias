@@ -101,6 +101,7 @@ alias gipa="gi pull"
 alias gipo="gi push"
 alias gips='git-sign-push'
 alias gipu='git push upstream HEAD' # Push current branch to upstream (same-named remote branch)
+alias girb0='gi rebase --abort'
 alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
 alias gir='gi reset HEAD' # Resets git head
