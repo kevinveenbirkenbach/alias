@@ -101,7 +101,6 @@ alias gipa="gi pull"
 alias gipo="gi push"
 alias gips='git-sign-push'
 alias gipu='git push upstream HEAD' # Push current branch to upstream (same-named remote branch)
-alias girb0='gi rebase --abort'
 alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
 alias gir='gi reset HEAD' # Resets git head
@@ -113,6 +112,7 @@ alias gist='gist apply' # Git stash apply
 alias giup="gico && gipo"
 alias giuser='gi config user.name'
 alias gizo='gido && gico && gipo' # show diff, xcopy and commit push
+alias gra='gi rebase --abort'
 alias inacta='__inacta(){ l "pci && m test-act-all"; }; __inacta'
 alias inacts='__inacts(){ l "pci && APP=\"${1}\" m test-act-app"; }; __inacts'
 alias ina='d exec -it infinito_nexus_debian sh' # sh into default infinito container
