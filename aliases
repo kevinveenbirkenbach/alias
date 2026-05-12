@@ -137,6 +137,7 @@ alias intd="(pci && m test-local-full)"
 alias int="(pci && tunit && tint && lint)" # full code tests
 alias intro="l intd" # deploy ohne cleanup
 alias inu='(pci && m docker-up)' # docker compose up for infinito
+alias i='p config init' # Executes 'pkgmgr config init'
 alias lint='ru; cs' # Lint and fix all code
 alias lrange='__lrange(){ awk -v f="$1" -v t="$2" '\''$0~f{p=1}p;$0~t{p=0}'\'' "$3"; }; __lrange' # Filter log https://chatgpt.com/share/69761151-6910-800f-8f2a-17ea32308f75
 alias l='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; __tlog' # l <alias|cmd> [logfile]
@@ -153,7 +154,6 @@ alias pca='pcd alias' # Change to alias repo directory
 alias pcdci='pcd computer-inventory' # changes to computer-inventory folder
 alias pcd='__pcd(){ cd "$(pp "$1")"; }; __pcd' # Change directory to packagemanager package
 alias pci='pcd infinito'
-alias pcoin='p config init' # Executes 'pkgmgr config init'
 alias pc='p code' # Opens pkgmgr code
 alias pe='p explore' # Opens GNOME for pkgmgr package
 alias pmp='p mirror provision' # Provision mirrors via pkgmgr
@@ -179,7 +179,7 @@ alias te2e='m test-e2e' # Execute integration tests
 alias tint='m test-integration' # Execute integration test
 alias t='p terminal'
 alias tunit='m test-unit' # make test-unit
-alias update='sudo pacman -Syyu && cosy && au' # System upgrade + full repo sync + reload aliases in current shell
+alias u='i && sudo pacman -Syyu && cosy && au' # Initialize + system upgrade + full repo sync + reload aliases in current shell
 alias xc='xclip -selection clipboard'
 alias xs='__xs(){ eval "$*" | tee >(xc >/dev/null) | less -R; }; __xs' # Show unformated
 alias zc='__zc(){ local z="${1:-$(azf)}"; if [ -e "$z" ]; then printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$z"; enter; fi; rm -f -- "$z"; zip -vr "$z" *; }; __zc' # zip cwd (no dotfiles)
