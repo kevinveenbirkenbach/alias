@@ -38,7 +38,7 @@ alias coad='__coad(){ chezmoi add "${1}"}; __coad' # Add new file to chezmoi
 alias coap="chezmoi apply"
 alias co="echo 'Alpha & Omega Config' && (copu;cosy)"
 alias copu="echo 'Commit Config' && (pcd config && giau)"
-alias cosy='echo "Sync Config" && ((pcd config && m sync) || pkgmgr status --all) && coap'
+alias cosy='pcd config && m sync' # Full safe sync (pull-all -> reconcile -> re-add -> apply -> push-all)
 alias cs='checkshell'
 alias d0c='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
 alias d0o="dstopa && d0c && d0v"
@@ -179,6 +179,7 @@ alias te2e='m test-e2e' # Execute integration tests
 alias tint='m test-integration' # Execute integration test
 alias t='p terminal'
 alias tunit='m test-unit' # make test-unit
+alias update='sudo pacman -Syyu && cosy && au' # System upgrade + full repo sync + reload aliases in current shell
 alias xc='xclip -selection clipboard'
 alias xs='__xs(){ eval "$*" | tee >(xc >/dev/null) | less -R; }; __xs' # Show unformated
 alias zc='__zc(){ local z="${1:-$(azf)}"; if [ -e "$z" ]; then printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$z"; enter; fi; rm -f -- "$z"; zip -vr "$z" *; }; __zc' # zip cwd (no dotfiles)
