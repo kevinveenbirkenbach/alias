@@ -65,7 +65,7 @@ def split_comment_unquoted(line: str) -> Tuple[str, str, str]:
             comment = line[i:]
             m = re.search(r"(\s*)$", code)
             ws = m.group(1) if m else ""
-            code_wo_ws = code[:-len(ws)] if ws else code
+            code_wo_ws = code[: -len(ws)] if ws else code
             return code_wo_ws, ws, comment
     return line, "", ""
 
@@ -224,7 +224,9 @@ def build_norm_patterns(
             continue
         norm_to_aliases.setdefault(norm, []).append(name)
 
-    canonical_for_norm = {norm: choose_canonical(names) for norm, names in norm_to_aliases.items()}
+    canonical_for_norm = {
+        norm: choose_canonical(names) for norm, names in norm_to_aliases.items()
+    }
     norm_patterns_sorted = sorted(canonical_for_norm.keys(), key=lambda n: (-len(n), n))
     return canonical_for_norm, norm_patterns_sorted
 
@@ -355,7 +357,9 @@ def main() -> int:
         raw_inner_for_alias[al.name] = inner.strip()
 
     alias_body_1hop = build_alias_body_1hop(raw_inner_for_alias)
-    canonical_for_norm, norm_patterns_sorted = build_norm_patterns(raw_inner_for_alias, alias_body_1hop)
+    canonical_for_norm, norm_patterns_sorted = build_norm_patterns(
+        raw_inner_for_alias, alias_body_1hop
+    )
 
     changed_any = False
     out_lines: List[str] = []

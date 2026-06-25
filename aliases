@@ -37,6 +37,7 @@ alias cherry="gi cherry-pick" #git cherry-pick
 alias coad='__coad(){ chezmoi add "${1}"}; __coad' # Add new file to chezmoi
 alias coap="chezmoi apply"
 alias co="echo 'Alpha & Omega Config' && (copu;cosy)"
+alias config='pc config' # edit config
 alias copu="echo 'Commit Config' && (pcd config && giau)"
 alias cosy='pcd config && m sync' # Full safe sync (pull-all -> reconcile -> re-add -> apply -> push-all)
 alias cs='checkshell'
