@@ -3,30 +3,30 @@ alias 0='clear' # clear screen
 alias ac='pc alias' # Edit aliases
 alias ada='(pca && giau)' # add, commit, and push alias
 alias aedit='nano "$(afile)"' # Edit aliases file
-alias aeditu='aedit && aus'
-alias aexport='__aexport(){ (a export a="$1";) }; __aexport'
+alias aeditu='aedit && aus' # Edit aliases file, then sort and reload
+alias aexport='__aexport(){ (a export a="$1";) }; __aexport' # Export alias $1 via alias-repo make
 alias afact='(pca && m refactor)' # Refactors aliases
-alias afile='e "$(apath)/aliases"'
+alias afile='e "$(apath)/aliases"' # Print path of the aliases file
 alias ald='dp "$(atmp)/log"' # log dir
 alias alf='e "$(ald)/$(zulu).log"' # default log file path
-alias alist="(a list)"
+alias alist="(a list)" # List all aliases
 alias anewa='anew && ada' # Autopublishing of command
 alias anew='(pca && m add && aus)' # Add new alias
 alias ao='aus && ada' # update, add, commit, and push alias (Alpha and Omega ;) )
-alias apath='p path alias'
+alias apath='p path alias' # Print alias repo path
 alias a='pca && m' # Call alias 'make'
 alias arc2='__arc2(){ rg -F -l -0 "$1" | xargs -0 arc -qx --; }; __arc2' # arcx with string
 alias arce='__arce(){ rg -l -0 "$1" | xargs -0 arc -qx --; }; __arce' # arcx with regex
 alias arci='arc -qxI *.md LICENSE --' # Copys all files into clippboard except .md
-alias arco='arcx .'
+alias arco='arcx .' # Copy current dir contents to clipboard
 alias arcs='arcx $(gisl)' # content of all staged files
-alias arcx='arc -qx --'
-alias arename='__arename(){ (a rename old="$1" new="$2" && asort) }; __arename'
-alias ask='__asearch(){ (a search q="$1"); }; __asearch'
-alias asort="(a sort)"
+alias arcx='arc -qx --' # arc copy to clipboard (quiet, exclude)
+alias arename='__arename(){ (a rename old="$1" new="$2" && asort) }; __arename' # Rename alias $1 to $2 and sort
+alias ask='__asearch(){ (a search q="$1"); }; __asearch' # Search aliases for $1
+alias asort="(a sort)" # Sort the aliases file
 alias atmp='dp /tmp/alias' # base temp dir
-alias atmpo='n "$(atmp)"'
-alias au='(a update); source ~/.config/shell/aliases'
+alias atmpo='n "$(atmp)"' # Open alias temp dir in file explorer
+alias au='(a update); source ~/.config/shell/aliases' # Update aliases and reload them in current shell
 alias aus='asort && au' # Sort and update aliases
 alias azd='__azd(){ umask 077; mkdir -p -- "$(atmp)/zip"; printf "%s" "$(atmp)/zip"; }; __azd' # zip dir
 alias azf='__azf(){ printf "%s" "$(azd)/$(zulu).zip"; }; __azf' # default zip file path
@@ -35,61 +35,61 @@ alias c='code' # Execute code
 alias checkshell='if find . -type f -name "*.sh" | grep -q .; then find . -type f -name "*.sh" -print0 | xargs -0 shellcheck -x; else echo "⚠️  No .sh files found – nothing to check."; true; fi' # Starts shellcheck
 alias cherry="gi cherry-pick" #git cherry-pick
 alias coad='__coad(){ chezmoi add "${1}"}; __coad' # Add new file to chezmoi
-alias coap="chezmoi apply"
-alias co="echo 'Alpha & Omega Config' && (copu;cosy)"
+alias coap="chezmoi apply" # Apply chezmoi config
+alias co="echo 'Alpha & Omega Config' && (copu;cosy)" # Commit and fully sync config (Alpha & Omega)
 alias config='pc config' # edit config
-alias copu="echo 'Commit Config' && (pcd config && giau)"
+alias copu="echo 'Commit Config' && (pcd config && giau)" # Commit and push config repo
 alias cosy='pcd config && m sync' # Full safe sync (pull-all -> reconcile -> re-add -> apply -> push-all)
-alias cs='checkshell'
+alias cs='checkshell' # shellcheck all .sh files
 alias d0c='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
-alias d0o="dstopa && d0c && d0v"
+alias d0o="dstopa && d0c && d0v" # Stop and delete all docker containers and volumes
 alias d0v='d volume rm $(docker volume ls -q) 2>/dev/null' # Removes all docker volumes
-alias dact0='dpsa --filter "name=act" -q | xargs -r docker rm -f'
+alias dact0='dpsa --filter "name=act" -q | xargs -r docker rm -f' # Force-remove all act containers
 alias dbuild='__dbuild(){ docker build -t "$1" .; }; __dbuild' # Build local Dockerfile $1 => image name
-alias dc0='dc down'
-alias dc0o='dc0 -v'
-alias dc='d compose'
-alias d='docker'
-alias de='__de(){ docker exec -it $1 sh; }; __de'
+alias dc0='dc down' # docker compose down
+alias dc0o='dc0 -v' # docker compose down incl. volumes
+alias dc='d compose' # docker compose
+alias d='docker' # docker
+alias de='__de(){ docker exec -it $1 sh; }; __de' # Exec sh into container $1
 alias disip6="sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1" # Disable IPv6
 alias doa='sudo systemctl start docker' # Start docker service
 alias doro="dor && nmr" # full restart of docker incl. network manager to prevent flaky and spooky behaviour of TLLS connections
 alias dor='sudo systemctl restart docker' # Restart docker service
 alias dp='__dp(){ umask 077; mkdir -p -- "$1"; printf "%s" "$1"; }; __dp' # create protected dir (0700), echo path
-alias dpsa='dps -a'
-alias dps='d ps'
+alias dpsa='dps -a' # docker ps -a
+alias dps='d ps' # docker ps
 alias dpurge='d0o && dsystemprune' # Deletes everything docker related
 alias drun='docker run --rm' #Runs image
 alias dstopa='d stop $(docker ps -aq) 2>/dev/null' # Stopps all docker containers
 alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker related on the system
 alias e='echo' # echo
 alias enter='__enter(){ read -r _; }; __enter' # confirm overwrite
-alias fido='__fido(){ d="$(ald)"; f="$d/$(zulu).log"; if [ -n "${ZSH_VERSION-}" ]; then read -r "u?URL to download: "; else read -rp "URL to download: " u; fi; [ -n "$u" ] && curl -fL "$u" -o "$f" && printf "%s\n" "$f"; }; __fido'
+alias fido='__fido(){ d="$(ald)"; f="$d/$(zulu).log"; if [ -n "${ZSH_VERSION-}" ]; then read -r "u?URL to download: "; else read -rp "URL to download: " u; fi; [ -n "$u" ] && curl -fL "$u" -o "$f" && printf "%s\n" "$f"; }; __fido' # download URL (prompt) into timestamped log file
 alias fidos='__fidos(){ f="$(alf)"; if [ -n "${ZSH_VERSION-}" ]; then read -r "u?URL to download: "; else read -rp "URL to download: " u; fi; [ -n "$u" ] && curl -fL "$u" -o "$f" && finest "$f"; }; __fidos' # download URL to job-txt-(zulu).log and shrink it
 alias finest='__finest(){ fist 100000 "${1:-$(ls -t $(ald)/*.log 2>/dev/null | head -n1)}"; }; __finest' # shrink newest *.log (or given file) to 100000 lines
 alias fist='__fist(){ local n="$1"; local f="$2"; tail -n "$n" -- "$f" > "${f}.tmp" && mv -- "${f}.tmp" "$f"; }; __fist' # shrink file to last N lines: fist <lines> <file>
 alias gha0='gh run list --branch "$(git rev-parse --abbrev-ref HEAD)" --status in_progress --json databaseId -q ".[].databaseId" | xargs -r -n1 gh run cancel; gh run list --branch "$(git rev-parse --abbrev-ref HEAD)" --status queued --json databaseId -q ".[].databaseId" | xargs -r -n1 gh run cancel' # Cancel all in_progress and queued GitHub Actions runs for current branch
-alias ghm0='(){ ( br="${1:?usage: ghm0 <branch>}"; giob "$br" || exit 1; lint || exit 1; int || exit 1; gha0 || exit 1; gim || exit 1; gipo || exit 1; gime "$br" || exit 1; yes | p branch drop "$br" || exit 1 ) }'
+alias ghm0='(){ ( br="${1:?usage: ghm0 <branch>}"; giob "$br" || exit 1; lint || exit 1; int || exit 1; gha0 || exit 1; gim || exit 1; gipo || exit 1; gime "$br" || exit 1; yes | p branch drop "$br" || exit 1 ) }' # Merge branch $1 into master: checkout, lint, test, cancel CI, merge, push, drop branch
 alias gi0="giob . && gir . && gio0 && girec && gis" # Reset head and checkout all
 alias giaa='gia --all' # git add --all
-alias gia="gi add"
+alias gia="gi add" # git add
 alias giao='lint; giax && giup' # git add --all, push update and lint
 alias giau="giaa && gicoa && gipo" # git add --all, commit and push
-alias giax='giaa && gido'
+alias giax='giaa && gido' # git add --all and copy staged diff
 alias gibr='gi rev-parse --abbrev-ref HEAD' # Current git branch name
 alias giclo='gi clone' # Executes 'git clone'
-alias gicoa='__gicoa(){ gico -m "automatic commit by $(giuser) - $(zulu)"; }; __gicoa'
-alias gico='gi commit'
+alias gicoa='__gicoa(){ gico -m "automatic commit by $(giuser) - $(zulu)"; }; __gicoa' # Commit with automatic message
+alias gico='gi commit' # git commit
 alias gidic='__gidic(){ gidi "$1"..HEAD | tee >(xc >/dev/null) | less; }; __gidic' # All changes accumulated since commit
-alias gidi="gi diff"
+alias gidi="gi diff" # git diff
 alias gidil='gidic $(gilata)' # Changes since last tag
 alias gidilo='xs gidil' # Changes since last tag
-alias gidis='gidi --staged'
-alias gidiv='gil "$(git describe --tags --abbrev=0)"..HEAD'
-alias gidivo='xs gidiv'
+alias gidis='gidi --staged' # git diff --staged
+alias gidiv='gil "$(git describe --tags --abbrev=0)"..HEAD' # Log since latest tag
+alias gidivo='xs gidiv' # Show log since latest tag in pager and clipboard
 alias gidix='xs gidic' # diffs to this comment into clipboard
-alias gido='gis && (gidis | xc) && gidis'
-alias gi="git"
+alias gido='gis && (gidis | xc) && gidis' # Status plus copy staged diff to clipboard
+alias gi="git" # git
 alias gilata='gi describe --tags --abbrev=0' # Latest git tag
 alias gil='gi log' # Show git logs
 alias gime='gi merge' # git merge
@@ -98,9 +98,9 @@ alias gio0='gi clean -fdX .' # Executes 'git clean -fdX .' and deletes all untra
 alias giob='gi checkout' # Executes 'git checkout'
 alias gip2='gipa2 && gips && gipu' # Pull current branch from origin+upstream, sign-push, then push current branch to upstream
 alias gipa2='br=$(gibr) && gipa origin "$br" && gipa upstream "$br"' # Pull current branch from origin and upstream
-alias gipa="gi pull"
-alias gipo="gi push"
-alias gips='git-sign-push'
+alias gipa="gi pull" # git pull
+alias gipo="gi push" # git push
+alias gips='git-sign-push' # Sign and push via git-sign-push
 alias gipu='git push upstream HEAD' # Push current branch to upstream (same-named remote branch)
 alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
@@ -110,16 +110,16 @@ alias gis='gi status' # Git status
 alias gisl='git diff --cached --name-only --diff-filter=ACMR | paste -sd" " -' # All staged files, except deleted
 alias gista='gi stash' # Git stash
 alias gist='gist apply' # Git stash apply
-alias giup="gico && gipo"
-alias giuser='gi config user.name'
+alias giup="gico && gipo" # Commit and push
+alias giuser='gi config user.name' # Show git user name
 alias gizo='gido && gico && gipo' # show diff, xcopy and commit push
-alias gra='gi rebase --abort'
-alias inacta='__inacta(){ l "pci && m test-act-all"; }; __inacta'
-alias inacts='__inacts(){ l "pci && APP=\"${1}\" m test-act-app"; }; __inacts'
+alias gra='gi rebase --abort' # git rebase --abort
+alias inacta='__inacta(){ l "pci && m test-act-all"; }; __inacta' # Log-run all act tests in infinito repo
+alias inacts='__inacts(){ l "pci && APP=\"${1}\" m test-act-app"; }; __inacts' # Log-run act test for app $1
 alias ina='d exec -it infinito_nexus_debian sh' # sh into default infinito container
-alias inax='arcx .github/workflows/test-deploy-server.yml Makefile Dockerfile scripts/tests scripts/meta cli/deploy/development cli/create/inventory/ docker-compose.yml compose/'
+alias inax='arcx .github/workflows/test-deploy-server.yml Makefile Dockerfile scripts/tests scripts/meta cli/deploy/development cli/create/inventory/ docker-compose.yml compose/' # Copy CI and deploy related infinito files to clipboard
 alias inda='__inda(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" && APP=\"${2}\" m test-deploy-app"; }; __inda' # Default test deploy of app
-alias indepo='__indepo(){ local host="$1"; shift; infinito deploy dedicated ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/servers.yml --limit "$host" --password-file ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/.pass/"$host".txt "$@"; }; __indepo'
+alias indepo='__indepo(){ local host="$1"; shift; infinito deploy dedicated ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/servers.yml --limit "$host" --password-file ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/.pass/"$host".txt "$@"; }; __indepo' # Deploy dedicated host $1 from computer-inventory
 alias indo="l intd0" # Test infinito deploy and log (Omega command)
 alias inir='(pci && m test-local-reset)' # Reset infinito inventory
 alias inlo2='__inlo2(){ l "pci && m test-local-dedicated TEST_DEPLOY_TYPE=\"${1}\" APP=\"${2}\""; }; __inlo2' # Redeploy
@@ -131,10 +131,10 @@ alias inlore='__inlore(){ l "pci && TEST_DEPLOY_TYPE=\"${1}\" APP=\"${2}\" m tes
 alias inlowu='__inlowu(){ l "pci && m test-local-web-purge && m test-local-full"; }; __inlowu' # Full deploy with fresh web files
 alias ino='doro && inu' # Restart full infinito stack
 alias insuc='m clean-sudo' # Sudo Clean Up
-alias intcy='__intcy(){ (pci && mkdir -p "roles/$1/tests/cypress" && cd "roles/$1/tests/cypress" && npm init -y && npm install --save-dev cypress && npx cypress open); }; __intcy'
+alias intcy='__intcy(){ (pci && mkdir -p "roles/$1/tests/cypress" && cd "roles/$1/tests/cypress" && npm init -y && npm install --save-dev cypress && npx cypress open); }; __intcy' # Scaffold cypress tests for role $1
 alias intd0="0 && intdc" # Tindac with clear screen
 alias intdc='e "Cleanup:" && d0o; e "Deploy:" && intd' # Clean Infinito.Nexus testdeploy to Arch with act
-alias intd="(pci && m test-local-full)"
+alias intd="(pci && m test-local-full)" # Full local test deploy of infinito
 alias int="(pci && tunit && tint && lint)" # full code tests
 alias intro="l intd" # deploy ohne cleanup
 alias inu='(pci && m docker-up)' # docker compose up for infinito
@@ -142,19 +142,19 @@ alias i='p config init' # Executes 'pkgmgr config init'
 alias lint='ru; cs' # Lint and fix all code
 alias lrange='__lrange(){ awk -v f="$1" -v t="$2" '\''$0~f{p=1}p;$0~t{p=0}'\'' "$3"; }; __lrange' # Filter log https://chatgpt.com/share/69761151-6910-800f-8f2a-17ea32308f75
 alias l='__tlog(){ local cmd="${aliases[$1]:-$1}"; local logfile="${2:-$(alf)}"; eval "$cmd" 2>&1 | tee "$logfile"; }; __tlog' # l <alias|cmd> [logfile]
-alias mi='m install'
-alias m='make'
+alias mi='m install' # make install
+alias m='make' # make
 alias nmr='sudo systemctl restart NetworkManager' # network manager restart
 alias n='__n(){ nohup nautilus "${1:-$PWD}" >/dev/null 2>&1 & disown; }; __n' # Executes nautilus to explore the (current) directory
-alias o="ao; co"
+alias o="ao; co" # Publish aliases and config (Omega)
 alias pa='p pull alias' # pull alliases
-alias pbd='p branch drop'
+alias pbd='p branch drop' # Drop pkgmgr branch
 alias pbo='p branch open' # Open new branch
 alias pc2i='pc computer-inventory' # change to computer-inventory
 alias pca='pcd alias' # Change to alias repo directory
 alias pcdci='pcd computer-inventory' # changes to computer-inventory folder
 alias pcd='__pcd(){ cd "$(pp "$1")"; }; __pcd' # Change directory to packagemanager package
-alias pci='pcd infinito'
+alias pci='pcd infinito' # Change to infinito repo directory
 alias pc='p code' # Opens pkgmgr code
 alias pe='p explore' # Opens GNOME for pkgmgr package
 alias pmp='p mirror provision' # Provision mirrors via pkgmgr
@@ -162,27 +162,27 @@ alias pms='p mirror setup' # Setup mirrors local
 alias po='p push alias' # push aliases
 alias p='pkgmgr' # Executes pkgmgr
 alias pp='p path' # Package manager path
-alias prma='pr major'
-alias prmi='pr minor'
-alias prp='pr patch'
-alias pr='p release'
+alias prma='pr major' # Release major version
+alias prmi='pr minor' # Release minor version
+alias prp='pr patch' # Release patch version
+alias pr='p release' # pkgmgr release
 alias psa='p status --all ' # Show status off all repos
-alias pt='p terminal'
-alias rgtxt='__rgtxt(){ q="$1"; d="$(dp "$(atmp)/files")"; f="$d/$(zulu).txt"; rg -l -0 "$q" | xargs -0 awk '\''FNR==1{print "\n===== FILE: " FILENAME " =====\n"}{print}'\'' > "$f"; printf "%s\n" "$f"; }; __rgtxt'
-alias ring='paplay /usr/share/sounds/freedesktop/stereo/complete.oga'
+alias pt='p terminal' # Open pkgmgr terminal
+alias rgtxt='__rgtxt(){ q="$1"; d="$(dp "$(atmp)/files")"; f="$d/$(zulu).txt"; rg -l -0 "$q" | xargs -0 awk '\''FNR==1{print "\n===== FILE: " FILENAME " =====\n"}{print}'\'' > "$f"; printf "%s\n" "$f"; }; __rgtxt' # Dump all files matching regex $1 into one txt file
+alias ring='paplay /usr/share/sounds/freedesktop/stereo/complete.oga' # Play notification sound
 alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruff
-alias ssha='ssh alphaserver'
-alias sshe='ssh echoserver'
-alias sshg='ssh galaxyserver'
-alias te2e0='0 && te2e'
-alias te2e0l='l te2e0'
+alias ssha='ssh alphaserver' # ssh alphaserver
+alias sshe='ssh echoserver' # ssh echoserver
+alias sshg='ssh galaxyserver' # ssh galaxyserver
+alias te2e0='0 && te2e' # Clear screen and run e2e tests
+alias te2e0l='l te2e0' # Clear screen, run e2e tests and log
 alias te2e='m test-e2e' # Execute integration tests
 alias tint='m test-integration' # Execute integration test
-alias t='p terminal'
+alias t='p terminal' # Open pkgmgr terminal
 alias tunit='m test-unit' # make test-unit
 alias u='i && sudo pacman -Syyu && cosy && au' # Initialize + system upgrade + full repo sync + reload aliases in current shell
-alias xc='xclip -selection clipboard'
+alias xc='xclip -selection clipboard' # Copy stdin to clipboard
 alias xs='__xs(){ eval "$*" | tee >(xc >/dev/null) | less -R; }; __xs' # Show unformated
 alias zc='__zc(){ local z="${1:-$(azf)}"; if [ -e "$z" ]; then printf "Overwrite %s (Enter=ok, Ctrl+C=abort) " "$z"; enter; fi; rm -f -- "$z"; zip -vr "$z" *; }; __zc' # zip cwd (no dotfiles)
 alias zulu='date -u +%Y%m%dT%H%M%SZ' # ISO-8601 basic, UTC, Zulu
-alias z="zip"
+alias z="zip" # zip
