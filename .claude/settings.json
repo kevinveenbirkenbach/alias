@@ -1,0 +1,18 @@
+{
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(make -n install -C /home/kevinveenbirkenbach/Repositories/github.com/kevinveenbirkenbach/alias)"
+    ],
+    "ask": [
+      "Bash(docker run*)",
+      "Bash(git commit*)",
+      "Bash(git -C*)",
+      "Bash(git push*)",
+      "Bash(curl*)"
+    ]
+  }
+}

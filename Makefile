@@ -47,6 +47,15 @@ install:
 	grep -qxF '[ -f ~/.config/shell/aliases ] && . ~/.config/shell/aliases' $(ZSHRC) \
 		|| echo '[ -f ~/.config/shell/aliases ] && . ~/.config/shell/aliases' >> $(ZSHRC)
 
+	@echo ">>> Ensuring alias-tips (shows 'Alias tip:')"
+	@if [ ! -d "$(SHELL_CONFIG_DIR)/plugins/alias-tips" ]; then \
+		echo ">>> Installing alias-tips"; \
+		mkdir -p "$(SHELL_CONFIG_DIR)/plugins"; \
+		git clone --depth 1 https://github.com/djui/alias-tips "$(SHELL_CONFIG_DIR)/plugins/alias-tips"; \
+	fi
+	@src='[ -f ~/.config/shell/plugins/alias-tips/alias-tips.plugin.zsh ] && source ~/.config/shell/plugins/alias-tips/alias-tips.plugin.zsh'; \
+	grep -qxF "$$src" $(ZSHRC) || echo "$$src" >> $(ZSHRC)
+
 	@echo ">>> Aliases installed successfully"
 
 refresh:
