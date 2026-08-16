@@ -43,7 +43,7 @@ alias copu="echo 'Commit Config' && (pcd config && giau)" # Commit and push conf
 alias cosy='pcd config && m sync' # Full safe sync (pull-all -> reconcile -> re-add -> apply -> push-all)
 alias cs='checkshell' # shellcheck all .sh files
 alias d0c='d rm -f $(docker ps -aq) 2>/dev/null' # Deletes all docker containers
-alias d0o="dstopa && d0c && d0v" # Stop and delete all docker containers and volumes
+alias d0o="ds0 && dstopa && d0c && d0v" # Remove all swarm services, then stop and delete all docker containers and volumes
 alias d0v='d volume rm $(docker volume ls -q) 2>/dev/null' # Removes all docker volumes
 alias dact0='dpsa --filter "name=act" -q | xargs -r docker rm -f' # Force-remove all act containers
 alias dbuild='__dbuild(){ docker build -t "$1" .; }; __dbuild' # Build local Dockerfile $1 => image name
@@ -61,6 +61,7 @@ alias dpsa='dps -a' # docker ps -a
 alias dps='d ps' # docker ps
 alias dpurge='d0o && dsystemprune' # Deletes everything docker related
 alias drun='docker run --rm' #Runs image
+alias ds0='d service ls -q 2>/dev/null | xargs -r docker service rm >/dev/null 2>&1' # Removes all docker swarm services
 alias dstopa='d stop $(docker ps -aq) 2>/dev/null' # Stopps all docker containers
 alias dsystemprune='d system prune -a --volumes -f' # Prunes everything docker related on the system
 alias e='echo' # echo
