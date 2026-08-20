@@ -106,6 +106,7 @@ alias gipa2='br=$(gibr) && gipa origin "$br" && gipa upstream "$br"' # Pull curr
 alias gipa="gi pull" # git pull
 alias gipo="gi push" # git push
 alias gips='git-sign-push' # Sign and push via git-sign-push
+alias gipsn='GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0=/dev/null git-sign-push' # Sign and push via git-sign-push with all git hooks disabled (gips accepts no --no-verify)
 alias gipu='git push upstream HEAD' # Push current branch to upstream (same-named remote branch)
 alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
