@@ -118,6 +118,7 @@ alias gista='gi stash' # Git stash
 alias gist='gist apply' # Git stash apply
 alias giup="gico && gipo" # Commit and push
 alias giuser='gi config user.name' # Show git user name
+alias giwc='__giwc(){ local b="${1:?usage: giwc <branch>}" d; d=$(gi worktree list | grep -F -- "$b]" | head -1 | cut -d" " -f1); if [ -n "$d" ]; then cd "$d"; else giob "$b"; fi; }; __giwc' # Change into the worktree holding branch $1, or check $1 out here when no worktree has it
 alias gizo='gido && gico && gipo' # show diff, xcopy and commit push
 alias gra='gi rebase --abort' # git rebase --abort
 alias indepo='__indepo(){ local host="$1"; shift; infinito deploy dedicated ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/servers.yml --limit "$host" --password-file ~/Repositories/git.veen.world/kevinveenbirkenbach/computer-inventory/.pass/"$host".txt "$@"; }; __indepo' # Deploy dedicated host $1 from computer-inventory
