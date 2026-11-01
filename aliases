@@ -104,9 +104,9 @@ alias giob='gi checkout' # Executes 'git checkout'
 alias gip2='gipa2 && gips && gipu' # Pull current branch from origin+upstream, sign-push, then push current branch to upstream
 alias gipa2='br=$(gibr) && gipa origin "$br" && gipa upstream "$br"' # Pull current branch from origin and upstream
 alias gipa="gi pull" # git pull
-alias gipo="gi push" # git push
-alias gips='git-sign-push' # Sign and push via git-sign-push
-alias gipsn='GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0=/dev/null git-sign-push' # Sign and push via git-sign-push with all git hooks disabled (gips accepts no --no-verify)
+alias gipo='pkgmgr push --no-sign' # Push via pkgmgr push without signing, syncing every mirror pushurl
+alias gipsn='GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0=/dev/null pkgmgr push' # Sign and push via pkgmgr push with all git hooks disabled
+alias gips='pkgmgr push' # Sign and push via pkgmgr push, syncing every mirror pushurl
 alias gipu='git push upstream HEAD' # Push current branch to upstream (same-named remote branch)
 alias girec="gire ." # Git restore current folder
 alias gire="gi restore" # Deletes all unstaged files
