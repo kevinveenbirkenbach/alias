@@ -26,7 +26,7 @@ alias ask='__asearch(){ (a search q="$1"); }; __asearch' # Search aliases for $1
 alias asort="(a sort)" # Sort the aliases file
 alias atmp='dp /tmp/alias' # base temp dir
 alias atmpo='n "$(atmp)"' # Open alias temp dir in file explorer
-alias au='(a update); source ~/.config/shell/aliases' # Update aliases and reload them in current shell
+alias au='(a update); s' # Update aliases and reload everything in current shell
 alias aus='asort && au' # Sort and update aliases
 alias azd='__azd(){ umask 077; mkdir -p -- "$(atmp)/zip"; printf "%s" "$(atmp)/zip"; }; __azd' # zip dir
 alias azf='__azf(){ printf "%s" "$(azd)/$(zulu).zip"; }; __azf' # default zip file path
@@ -154,6 +154,7 @@ alias pt='p terminal' # Open pkgmgr terminal
 alias rgtxt='__rgtxt(){ q="$1"; d="$(dp "$(atmp)/files")"; f="$d/$(zulu).txt"; rg -l -0 "$q" | xargs -0 awk '\''FNR==1{print "\n===== FILE: " FILENAME " =====\n"}{print}'\'' > "$f"; printf "%s\n" "$f"; }; __rgtxt' # Dump all files matching regex $1 into one txt file
 alias ring='paplay /usr/share/sounds/freedesktop/stereo/complete.oga' # Play notification sound
 alias ru='ruff check . --fix && ruff format .' # autoformat everythinbg with ruff
+alias s='if [ -n "${ZSH_VERSION:-}" ]; then source ~/.zshrc; else source ~/.bashrc; fi' # Reload all aliases, whatever file defines them, via the current shell's rc
 alias ssha='ssh alphaserver' # ssh alphaserver
 alias sshe='ssh echoserver' # ssh echoserver
 alias sshg='ssh galaxyserver' # ssh galaxyserver
