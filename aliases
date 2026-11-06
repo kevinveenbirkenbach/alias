@@ -158,6 +158,7 @@ alias s='if [ -n "${ZSH_VERSION:-}" ]; then source ~/.zshrc; else source ~/.bash
 alias ssha='ssh alphaserver' # ssh alphaserver
 alias sshe='ssh echoserver' # ssh echoserver
 alias sshg='ssh galaxyserver' # ssh galaxyserver
+alias tabname='wezterm cli set-tab-title' # change wezterm tabname
 alias te2e0='0 && te2e' # Clear screen and run e2e tests
 alias te2e0l='l te2e0' # Clear screen, run e2e tests and log
 alias te2e='m test-e2e' # Execute integration tests
